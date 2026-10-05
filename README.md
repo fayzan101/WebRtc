@@ -1,4 +1,4 @@
-# Project 23: WebRTC Group Calling — Mesh vs SFU Architecture and Bandwidth Scaling
+# WebRTC Group Calling — Mesh vs SFU Architecture and Bandwidth Scaling
 
 A 1:1 WebRTC call does not scale to groups: in a full mesh every participant uploads a separate stream to every other participant. SFUs fix the uplink problem. This project builds both architectures and measures where each breaks.
 
