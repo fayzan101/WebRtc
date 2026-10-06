@@ -26,7 +26,7 @@ npm init -y   # when implementing; docs-only repos can skip until coding starts
 ```bash
 # From project root (once mesh/ exists)
 cd mesh/server && npm install ws express cors
-cd ../client   # static HTML/JS or Vite/React — your choice
+cd ../client   # Vite + React app (npm run dev)
 ```
 
 **Minimal mesh server needs:**

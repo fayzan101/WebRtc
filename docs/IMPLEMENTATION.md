@@ -27,7 +27,9 @@ Implement a WebSocket room server that:
 }
 ```
 
-### 1.2 Mesh client (browser)
+### 1.2 Mesh client (React + Vite)
+
+UI in `mesh/client` (React). WebRTC logic in `lib/mesh.ts` + `hooks/useMeshRoom.ts`.
 
 For each remote peer:
 
@@ -67,9 +69,9 @@ Small Node endpoint or CLI token:
 - Room = shared room name
 - Grants: join, publish, subscribe
 
-### 2.3 SFU client page
+### 2.3 SFU client page (React + Vite)
 
-Using LiveKit JS SDK:
+UI in `sfu/client` (React). Room logic in `lib/sfuRoom.ts` + `hooks/useSfuRoom.ts` using LiveKit JS SDK:
 
 1. `Room.connect(url, token)`
 2. Create local audio track; `room.localParticipant.publishTrack(...)`

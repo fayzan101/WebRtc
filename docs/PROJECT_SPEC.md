@@ -111,6 +111,7 @@ The project is complete when:
 
 - LiveKit or Janus
 - Node.js
+- React + Vite (mesh and SFU frontends)
 - Puppeteer
 - Browser WebRTC API
 - Chromium / Chrome

@@ -8,6 +8,7 @@
 | [PROTOCOLS.md](PROTOCOLS.md) | Implementers / viva | Call anatomy and protocol stack |
 | [SETUP.md](SETUP.md) | Implementers | Tools, install, ports, `tc` |
 | [IMPLEMENTATION.md](IMPLEMENTATION.md) | Implementers | Ordered build steps and gates |
+| [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) | Implementers | Phase-wise complete-build plan (no stubs) |
 | [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md) | Experimenters | Test matrix and hypotheses |
 | [EVALUATION.md](EVALUATION.md) | Experimenters | Metrics, plots, interpretation |
 | [DATA_SCHEMA.md](DATA_SCHEMA.md) | Automation | JSON/CSV result format |

@@ -16,6 +16,7 @@ Relate architecture choice to **per-host throughput demands** and **access-link 
 | [docs/PROTOCOLS.md](docs/PROTOCOLS.md) | ICE/STUN, DTLS-SRTP, RTP/RTCP, signaling, NAT |
 | [docs/SETUP.md](docs/SETUP.md) | Environment, dependencies, LiveKit, tools |
 | [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md) | Step-by-step build guide (mesh → SFU → automation) |
+| [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) | Phase-wise plan — complete builds only (no stubs) |
 | [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md) | N=2–6 tests, uplink caps, scenarios |
 | [docs/EVALUATION.md](docs/EVALUATION.md) | Metrics, getStats collection, analysis |
 | [docs/DATA_SCHEMA.md](docs/DATA_SCHEMA.md) | JSON/CSV results contract |
@@ -47,6 +48,7 @@ Automated participants for **N = 2 to 6** via Puppeteer + fake media, with a scr
 | LiveKit server (`livekit-server --dev`) or Janus | SFU |
 | LiveKit JS SDK | SFU client |
 | Node.js | Signaling server, automation, stats scripts |
+| React + Vite | Mesh and SFU frontends |
 | Puppeteer + Chromium | Headless participants with fake media |
 | Chrome DevTools / `getStats()` | Quality metrics |
 | Wireshark | Packet capture (RTP/UDP/WebSocket) |
