@@ -1,0 +1,26 @@
+{
+  "name": "webrtc-mesh-vs-sfu",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Project 23: WebRTC group calling — Mesh vs SFU bandwidth scaling",
+  "workspaces": [
+    "mesh/server",
+    "mesh/client",
+    "sfu/server",
+    "sfu/client",
+    "automation",
+    "shared"
+  ],
+  "scripts": {
+    "mesh": "npm run start -w @webrtc/mesh-server",
+    "mesh:client": "npm run dev -w @webrtc/mesh-client",
+    "sfu": "npm run start -w @webrtc/sfu-server",
+    "sfu:client": "npm run dev -w @webrtc/sfu-client",
+    "livekit": "node scripts/start-livekit.js",
+    "matrix": "npm run matrix -w @webrtc/automation",
+    "build:clients": "npm run build -w @webrtc/mesh-client && npm run build -w @webrtc/sfu-client"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

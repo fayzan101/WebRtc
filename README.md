@@ -77,19 +77,34 @@ Automated participants for **N = 2 to 6** via Puppeteer + fake media, with a scr
 - RTT, jitter, packet loss
 - Join time
 
-## Repository Layout (target)
+## Repository Layout
 
 ```
 WebRtc/
 ├── README.md
-├── docs/                    # All project documentation
-├── mesh/                    # Mesh signaling + client
-│   ├── server/              # WebSocket signaling
-│   └── client/              # Browser mesh client
-├── sfu/                     # LiveKit SFU client page
-├── automation/              # Puppeteer participants + stats
-├── scripts/                 # tc caps, analysis helpers
-└── results/                 # Collected CSV/JSON from runs
+├── package.json             # npm workspaces
+├── shared/                  # room/peer constants
+├── docs/
+├── mesh/
+│   ├── server/              # Express (+ WS in Phase 1)
+│   └── client/              # React + Vite mesh UI
+├── sfu/
+│   ├── server/              # Express token API (Phase 3)
+│   └── client/              # React + Vite SFU UI
+├── automation/              # Puppeteer (Phase 5+)
+├── scripts/
+└── results/
+```
+
+## Quick start (Phase 0)
+
+```bash
+npm install
+cp .env.example .env   # optional on Windows: copy .env.example .env
+npm run mesh           # http://127.0.0.1:3000/health
+npm run sfu            # http://127.0.0.1:3001/health
+npm run mesh:client    # http://127.0.0.1:5173 (proxies /health)
+npm run sfu:client     # http://127.0.0.1:5174
 ```
 
 ## License Note
