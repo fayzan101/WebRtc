@@ -1,0 +1,13 @@
+{
+  "name": "@webrtc/automation",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "matrix": "node src/matrix.js",
+    "run-once": "node src/runOnce.js"
+  },
+  "dependencies": {
+    "@webrtc/shared": "0.1.0"
+  }
+}
