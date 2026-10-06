@@ -24,6 +24,7 @@ Relate architecture choice to **per-host throughput demands** and **access-link 
 | [docs/ADVANCED.md](docs/ADVANCED.md) | Optional: simulcast, MCU, active speaker |
 | [docs/GLOSSARY.md](docs/GLOSSARY.md) | Terms |
 | [docs/CHECKLIST.md](docs/CHECKLIST.md) | Submission readiness |
+| [docs/mockups/README.md](docs/mockups/README.md) | UI mockups (full functionality) |
 
 ## Core POC
 

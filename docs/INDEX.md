@@ -16,6 +16,7 @@
 | [ADVANCED.md](ADVANCED.md) | Optional | Simulcast, MCU, active speaker, TURN |
 | [GLOSSARY.md](GLOSSARY.md) | Everyone | Terms |
 | [CHECKLIST.md](CHECKLIST.md) | Submitters | Hand-in readiness |
+| [mockups/README.md](mockups/README.md) | Design / UI | Screen mockups for full functionality |
 
 ## Suggested Reading Order
 
