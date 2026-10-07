@@ -1,78 +1,118 @@
 import { useCallback, useEffect, useState } from 'react';
-import { DEFAULT_ROOM_ID } from '@webrtc/shared';
-
-type HealthState =
-  | { status: 'pending' }
-  | { status: 'ok'; data: Record<string, unknown> }
-  | { status: 'error'; message: string };
+import { DevFooter } from './components/DevFooter';
+import { ErrorBanner } from './components/ErrorBanner';
+import { JoinForm } from './components/JoinForm';
+import { MeshLogo } from './components/MeshLogo';
+import { RemoteMedia } from './components/RemoteMedia';
+import { SplashScreen, shouldShowSplash } from './components/SplashScreen';
+import { StatusPanel } from './components/StatusPanel';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { useMeshRoom } from './hooks/useMeshRoom';
+import {
+  applyThemeToDocument,
+  persistTheme,
+  readStoredTheme,
+  type ThemeId,
+} from './lib/theme';
 
 export default function App() {
-  const [health, setHealth] = useState<HealthState>({ status: 'pending' });
-
-  const pingHealth = useCallback(async () => {
-    setHealth({ status: 'pending' });
-    try {
-      const res = await fetch('/health');
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const data = (await res.json()) as Record<string, unknown>;
-      setHealth({ status: 'ok', data });
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setHealth({
-        status: 'error',
-        message: `${message}. Start the mesh server with npm run mesh`,
-      });
-    }
-  }, []);
+  const room = useMeshRoom();
+  const [theme, setTheme] = useState<ThemeId>(() => readStoredTheme());
+  const [showSplash, setShowSplash] = useState(() => shouldShowSplash());
 
   useEffect(() => {
-    void pingHealth();
-  }, [pingHealth]);
+    applyThemeToDocument(theme);
+    persistTheme(theme);
+  }, [theme]);
+
+  const onThemeChange = useCallback((next: ThemeId) => {
+    setTheme(next);
+  }, []);
+
+  const connectionLabel =
+    room.status === 'connected'
+      ? 'Live'
+      : room.status === 'joining'
+        ? 'Connecting'
+        : room.status === 'failed'
+          ? 'Error'
+          : 'Idle';
 
   return (
     <>
-      <h1>Mesh Call</h1>
-      <p className="subtitle">
-        Project 23 — full-mesh WebRTC (Phase 0 scaffold). Default room{' '}
-        <code>{DEFAULT_ROOM_ID}</code>. Signaling and peer connections land in
-        Phase 1–2.
-      </p>
+      {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
 
-      <section className="panel">
-        <div className="row" style={{ justifyContent: 'space-between' }}>
-          <strong>Backend health</strong>
-          <button type="button" onClick={() => void pingHealth()}>
-            Refresh
-          </button>
-        </div>
-        <div style={{ marginTop: '0.85rem' }} data-testid="status">
-          {health.status === 'pending' && (
-            <span className="badge pending">
-              <span className="dot" /> Checking…
+      <div
+        id="app-shell"
+        className={`app-shell ${showSplash ? 'is-behind-splash' : 'is-revealed app-ready'}`}
+      >
+        <div className="ambient ambient-a" aria-hidden />
+        <div className="ambient ambient-b" aria-hidden />
+
+        <header id="header-card" className="topbar glass-panel card-enter">
+          <div className="topbar-brand">
+            <MeshLogo size={40} animated={false} className="header-logo" />
+            <div className="topbar-titles">
+              <div className="title-row">
+                <h1>Mesh Call</h1>
+                <span className="n1-chip" title="Each client uploads N−1 streams">
+                  N−1 mesh
+                </span>
+              </div>
+              <p className="subtitle">
+                Full-mesh WebRTC over P2P UDP · Project 23
+              </p>
+            </div>
+          </div>
+
+          <div className="topbar-aside">
+            <ThemeSwitcher theme={theme} onChange={onThemeChange} />
+            <span
+              id="connection-badge"
+              className={`connection-badge status-${room.status}`}
+              aria-live="polite"
+            >
+              <span className="status-dot" />
+              {connectionLabel}
             </span>
-          )}
-          {health.status === 'ok' && (
-            <span className="badge ok">
-              <span className="dot" /> Connected to mesh-server
-            </span>
-          )}
-          {health.status === 'error' && (
-            <span className="badge bad">
-              <span className="dot" /> Unreachable
-            </span>
-          )}
-        </div>
-        {health.status === 'ok' && (
-          <pre>{JSON.stringify(health.data, null, 2)}</pre>
-        )}
-        {health.status === 'error' && (
-          <p className="subtitle" style={{ marginTop: '0.75rem', marginBottom: 0 }}>
-            {health.message}
-          </p>
-        )}
-      </section>
+          </div>
+        </header>
+
+        <ErrorBanner message={room.error} onDismiss={room.clearError} />
+
+        <main id="app-main" className="layout">
+          <aside className="col sidebar">
+            <JoinForm
+              roomId={room.roomId}
+              peerId={room.peerId}
+              videoEnabled={room.videoEnabled}
+              status={room.status}
+              onRoomId={room.setRoomId}
+              onPeerId={room.setPeerId}
+              onVideoEnabled={room.setVideoEnabled}
+              onJoin={() => void room.join()}
+              onLeave={() => void room.leave()}
+            />
+            <StatusPanel
+              pcCount={room.pcCount}
+              remoteCount={room.remotes.length}
+              stats={room.stats}
+            />
+          </aside>
+
+          <section className="col stage">
+            <RemoteMedia
+              remotes={room.remotes}
+              localStream={room.localStream}
+              localPeerId={room.peerId}
+              videoEnabled={room.videoEnabled}
+              onJoinHint={() => void room.join()}
+            />
+          </section>
+        </main>
+
+        <DevFooter />
+      </div>
     </>
   );
 }
