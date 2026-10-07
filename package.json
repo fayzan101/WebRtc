@@ -19,8 +19,9 @@
     "livekit": "node scripts/start-livekit.js",
     "matrix": "npm run matrix -w @webrtc/automation",
     "build:clients": "npm run build -w @webrtc/mesh-client && npm run build -w @webrtc/sfu-client",
-    "test": "npm run test -w @webrtc/mesh-server",
-    "test:mesh-server": "npm run test -w @webrtc/mesh-server"
+    "test": "npm run test -w @webrtc/mesh-server && npm run test -w @webrtc/mesh-client",
+    "test:mesh-server": "npm run test -w @webrtc/mesh-server",
+    "test:mesh-client": "npm run test -w @webrtc/mesh-client"
   },
   "engines": {
     "node": ">=18"
