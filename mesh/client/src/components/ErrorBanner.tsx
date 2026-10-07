@@ -6,13 +6,18 @@ type Props = {
 export function ErrorBanner({ message, onDismiss }: Props) {
   if (!message) return null;
   return (
-    <div className="error-banner" role="alert">
+    <div id="error-banner" className="error-banner card-enter" role="alert">
       <div>
         <strong>Something went wrong</strong>
         <p>{message}</p>
       </div>
       {onDismiss && (
-        <button type="button" className="btn ghost" onClick={onDismiss}>
+        <button
+          type="button"
+          id="error-dismiss"
+          className="btn ghost"
+          onClick={onDismiss}
+        >
           Dismiss
         </button>
       )}
