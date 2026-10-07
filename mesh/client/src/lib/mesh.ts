@@ -18,10 +18,15 @@ type PeerState = {
   makingOffer: boolean;
   ignoreOffer: boolean;
   isSettingRemoteAnswerPending: boolean;
+  /** Serialize renegotiation so concurrent createOffer calls cannot scramble m-lines. */
+  negotiateChain: Promise<void>;
+  /** Stable video sender so mute/unmute uses replaceTrack instead of removeTrack. */
+  videoSender: RTCRtpSender | null;
 };
 
 /**
  * Manages N−1 RTCPeerConnections with polite glare handling.
+ * Offers are driven only by `onnegotiationneeded` (Perfect Negotiation).
  */
 export class MeshEngine {
   private opts: MeshEngineOptions;
@@ -48,18 +53,13 @@ export class MeshEngine {
   async handleJoined(existingPeers: string[]) {
     for (const remoteId of existingPeers) {
       await this.ensurePeer(remoteId);
-      if (shouldCreateOffer(this.opts.localPeerId, remoteId)) {
-        await this.makeOffer(remoteId);
-      }
+      // Impolite peer's addTrack fires negotiationneeded → offer.
     }
   }
 
   async handlePeerJoined(remoteId: string) {
     if (remoteId === this.opts.localPeerId) return;
     await this.ensurePeer(remoteId);
-    if (shouldCreateOffer(this.opts.localPeerId, remoteId)) {
-      await this.makeOffer(remoteId);
-    }
   }
 
   handlePeerLeft(remoteId: string) {
@@ -70,8 +70,10 @@ export class MeshEngine {
     const remoteId = msg.from;
     const state = await this.ensurePeer(remoteId);
     const polite = isPolitePeer(this.opts.localPeerId, remoteId);
-    const offerCollision =
-      state.makingOffer || state.pc.signalingState !== 'stable';
+    const readyForOffer =
+      !state.makingOffer &&
+      (state.pc.signalingState === 'stable' || state.isSettingRemoteAnswerPending);
+    const offerCollision = !readyForOffer;
 
     state.ignoreOffer = !polite && offerCollision;
     if (state.ignoreOffer) {
@@ -79,7 +81,6 @@ export class MeshEngine {
     }
 
     try {
-      state.isSettingRemoteAnswerPending = false;
       await state.pc.setRemoteDescription({
         type: 'offer',
         sdp: String(msg.payload?.sdp ?? ''),
@@ -107,10 +108,10 @@ export class MeshEngine {
         type: 'answer',
         sdp: String(msg.payload?.sdp ?? ''),
       });
-      state.isSettingRemoteAnswerPending = false;
     } catch (err) {
-      state.isSettingRemoteAnswerPending = false;
       this.opts.onError?.(err instanceof Error ? err : new Error(String(err)));
+    } finally {
+      state.isSettingRemoteAnswerPending = false;
     }
   }
 
@@ -142,6 +143,13 @@ export class MeshEngine {
     if (enabled) {
       if (existing && existing.readyState === 'live') {
         existing.enabled = true;
+        for (const state of this.peers.values()) {
+          if (state.videoSender && state.videoSender.track !== existing) {
+            await state.videoSender.replaceTrack(existing);
+          } else if (!state.videoSender) {
+            state.videoSender = state.pc.addTrack(existing, stream);
+          }
+        }
         return;
       }
       const videoStream = await navigator.mediaDevices.getUserMedia({
@@ -151,22 +159,26 @@ export class MeshEngine {
       const track = videoStream.getVideoTracks()[0];
       if (!track) return;
       stream.addTrack(track);
-      for (const { pc } of this.peers.values()) {
-        pc.addTrack(track, stream);
+      for (const state of this.peers.values()) {
+        if (state.videoSender) {
+          await state.videoSender.replaceTrack(track);
+        } else {
+          state.videoSender = state.pc.addTrack(track, stream);
+        }
       }
       return;
     }
 
+    // Keep video m-line; replaceTrack(null) avoids SDP order breakage from removeTrack.
     for (const track of stream.getVideoTracks()) {
-      track.stop();
-      stream.removeTrack(track);
-      for (const { pc } of this.peers.values()) {
-        for (const sender of pc.getSenders()) {
-          if (sender.track === track) {
-            pc.removeTrack(sender);
-          }
+      track.enabled = false;
+      for (const state of this.peers.values()) {
+        if (state.videoSender && state.videoSender.track === track) {
+          await state.videoSender.replaceTrack(null);
         }
       }
+      track.stop();
+      stream.removeTrack(track);
     }
   }
 
@@ -189,13 +201,11 @@ export class MeshEngine {
       makingOffer: false,
       ignoreOffer: false,
       isSettingRemoteAnswerPending: false,
+      negotiateChain: Promise.resolve(),
+      videoSender: null,
     };
     this.peers.set(remoteId, state);
     this.opts.onPcCount?.(this.peers.size);
-
-    for (const track of this.opts.localStream.getTracks()) {
-      pc.addTrack(track, this.opts.localStream);
-    }
 
     pc.onicecandidate = (ev) => {
       this.opts.signaling.send({
@@ -228,33 +238,51 @@ export class MeshEngine {
       this.opts.onRemoteMedia(this.getRemotes());
     };
 
-    pc.onnegotiationneeded = async () => {
-      try {
-        if (shouldCreateOffer(this.opts.localPeerId, remoteId)) {
-          await this.makeOffer(remoteId);
-        }
-      } catch (err) {
-        this.opts.onError?.(err instanceof Error ? err : new Error(String(err)));
-      }
+    // Attach before addTrack so the first negotiationneeded is handled once.
+    pc.onnegotiationneeded = () => {
+      void this.queueNegotiate(remoteId);
     };
 
+    // Stable m-line order: audio, then video.
+    for (const track of this.opts.localStream.getAudioTracks()) {
+      pc.addTrack(track, this.opts.localStream);
+    }
+    for (const track of this.opts.localStream.getVideoTracks()) {
+      state.videoSender = pc.addTrack(track, this.opts.localStream);
+    }
+
     return state;
+  }
+
+  private queueNegotiate(remoteId: string) {
+    if (!shouldCreateOffer(this.opts.localPeerId, remoteId)) return;
+
+    const state = this.peers.get(remoteId);
+    if (!state) return;
+
+    state.negotiateChain = state.negotiateChain
+      .then(() => this.makeOffer(remoteId))
+      .catch((err) => {
+        this.opts.onError?.(err instanceof Error ? err : new Error(String(err)));
+      });
   }
 
   private async makeOffer(remoteId: string) {
     const state = this.peers.get(remoteId);
     if (!state) return;
+    if (state.pc.signalingState !== 'stable') return;
+
     try {
       state.makingOffer = true;
-      const offer = await state.pc.createOffer();
-      if (state.pc.signalingState !== 'stable') return;
-      await state.pc.setLocalDescription(offer);
+      await state.pc.setLocalDescription();
+      const desc = state.pc.localDescription;
+      if (!desc?.sdp || desc.type !== 'offer') return;
       this.opts.signaling.send({
         type: 'offer',
         roomId: this.opts.roomId,
         from: this.opts.localPeerId,
         to: remoteId,
-        payload: { sdp: state.pc.localDescription?.sdp ?? '' },
+        payload: { sdp: desc.sdp },
       });
     } finally {
       state.makingOffer = false;

@@ -42,11 +42,14 @@ Pick one:
 
 **Option A — Download binary** (see [LiveKit docs](https://docs.livekit.io/home/self-hosting/local/))
 
-**Option B — Docker**
+**Option B — Docker** (or `npm run livekit`, which uses the same flags)
 
 ```bash
-docker run --rm -p 7880:7880 -p 7881:7881 -p 7882:7882/udp livekit/livekit-server --dev
+docker run --rm -p 7880:7880 -p 7881:7881 -p 7882:7882/udp \
+  livekit/livekit-server --dev --bind 0.0.0.0 --node-ip 127.0.0.1
 ```
+
+Without `--bind 0.0.0.0`, LiveKit only listens on container localhost and browsers get `could not establish signal connection: Failed to fetch`.
 
 **Option C — Installed CLI/binary**
 
@@ -59,15 +62,25 @@ Dev mode typically:
 - Listens for WebRTC / HTTP API on local ports (commonly `7880`)
 - Uses published dev API key/secret (fine for lab only)
 
-### SFU Client Page
+### SFU token server + React client (Phase 3)
+
+Copy env once (gitignored): `cp .env.example .env` (PowerShell: `Copy-Item .env.example .env`).
 
 ```bash
-cd sfu
-npm install livekit-client
-# Serve a page that connects with a token, publishes mic, subscribes to others
+# Terminal A — LiveKit SFU
+npm run livekit
+
+# Terminal B — token API (default :3001; override with SFU_PORT in .env)
+npm run sfu
+
+# Terminal C — React client (:5174; proxies /token using SFU_PORT)
+npm run sfu:client
 ```
 
-Generate join tokens with LiveKit’s token tools or a tiny Node token endpoint using the same API key/secret as `--dev`.
+`POST /token` body: `{ "roomName": "project23", "identity": "p1" }`  
+Uses `LIVEKIT_URL` / `LIVEKIT_API_KEY` / `LIVEKIT_API_SECRET` from `.env` (defaults match `livekit-server --dev`).
+
+If you see `LIVEKIT_API_KEY is required`, `.env` is missing. If `Port 3001 is already in use`, set `SFU_PORT=3002` (or any free port) in `.env` — Docker/WSL sometimes holds 3001 on Windows.
 
 ## 4. Puppeteer Automation
 

@@ -216,8 +216,8 @@ export function StatusPanel({ pcCount, remoteCount, stats }: Props) {
       </div>
 
       <p className="hint" id="stats-hint">
-        Uplink now {formatBitrate(stats?.uplinkBitrateBps ?? 0)} · scales with
-        peer count
+        Uplink now {formatBitrate(stats?.uplinkBitrateBps ?? 0)} · SFU keeps
+        publish path ~flat vs N
       </p>
     </section>
   );

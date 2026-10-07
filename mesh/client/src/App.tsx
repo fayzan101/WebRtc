@@ -3,6 +3,7 @@ import { DevFooter } from './components/DevFooter';
 import { ErrorBanner } from './components/ErrorBanner';
 import { JoinForm } from './components/JoinForm';
 import { MeshLogo } from './components/MeshLogo';
+import { MeshTopology } from './components/MeshTopology';
 import { RemoteMedia } from './components/RemoteMedia';
 import { SplashScreen, shouldShowSplash } from './components/SplashScreen';
 import { StatusPanel } from './components/StatusPanel';
@@ -105,8 +106,15 @@ export default function App() {
               remotes={room.remotes}
               localStream={room.localStream}
               localPeerId={room.peerId}
+              roomId={room.roomId}
               videoEnabled={room.videoEnabled}
               onJoinHint={() => void room.join()}
+            />
+            <MeshTopology
+              localPeerId={room.peerId}
+              remotePeerIds={room.remotes.map((r) => r.peerId)}
+              videoEnabled={room.videoEnabled}
+              connected={room.status === 'connected'}
             />
           </section>
         </main>
