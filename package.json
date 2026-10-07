@@ -18,7 +18,9 @@
     "sfu:client": "npm run dev -w @webrtc/sfu-client",
     "livekit": "node scripts/start-livekit.js",
     "matrix": "npm run matrix -w @webrtc/automation",
-    "build:clients": "npm run build -w @webrtc/mesh-client && npm run build -w @webrtc/sfu-client"
+    "build:clients": "npm run build -w @webrtc/mesh-client && npm run build -w @webrtc/sfu-client",
+    "test": "npm run test -w @webrtc/mesh-server",
+    "test:mesh-server": "npm run test -w @webrtc/mesh-server"
   },
   "engines": {
     "node": ">=18"
