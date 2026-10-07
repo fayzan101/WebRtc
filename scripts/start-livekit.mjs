@@ -2,8 +2,8 @@ import { spawn } from 'node:child_process';
 
 /**
  * Starts LiveKit in dev mode via Docker when available, else livekit-server binary.
- * Full SFU client work is Phase 3; this script is the Phase 0 root `livekit` entry.
  */
+// Bind 0.0.0.0 so Docker port-publish reaches the process; node-ip for host clients.
 const dockerArgs = [
   'run',
   '--rm',
@@ -15,11 +15,18 @@ const dockerArgs = [
   '7882:7882/udp',
   'livekit/livekit-server',
   '--dev',
+  '--bind',
+  '0.0.0.0',
+  '--node-ip',
+  '127.0.0.1',
 ];
 
 function run(command, args) {
   return new Promise((resolve) => {
-    const child = spawn(command, args, { stdio: 'inherit', shell: process.platform === 'win32' });
+    const child = spawn(command, args, {
+      stdio: 'inherit',
+      shell: process.platform === 'win32',
+    });
     child.on('error', () => resolve(false));
     child.on('exit', (code) => resolve(code === 0));
   });

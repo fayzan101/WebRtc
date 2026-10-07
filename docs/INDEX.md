@@ -5,6 +5,7 @@
 | [../README.md](../README.md) | Everyone | Project overview and links |
 | [PROJECT_SPEC.md](PROJECT_SPEC.md) | Instructor / student | Formal requirements and success criteria |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Implementers | Mesh vs SFU design and scaling model |
+| [SERVER_SIDE_EXPLAINED.md](SERVER_SIDE_EXPLAINED.md) | Everyone | Server-side working explained in plain words |
 | [PROTOCOLS.md](PROTOCOLS.md) | Implementers / viva | Call anatomy and protocol stack |
 | [SETUP.md](SETUP.md) | Implementers | Tools, install, ports, `tc` |
 | [IMPLEMENTATION.md](IMPLEMENTATION.md) | Implementers | Ordered build steps and gates |
@@ -19,7 +20,7 @@
 
 ## Suggested Reading Order
 
-1. PROJECT_SPEC → ARCHITECTURE → PROTOCOLS  
+1. PROJECT_SPEC → ARCHITECTURE → SERVER_SIDE_EXPLAINED → PROTOCOLS  
 2. SETUP → IMPLEMENTATION  
 3. EXPERIMENT_PLAN → EVALUATION → DATA_SCHEMA  
 4. REPORT_TEMPLATE → CHECKLIST  

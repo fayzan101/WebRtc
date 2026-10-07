@@ -13,6 +13,7 @@ Relate architecture choice to **per-host throughput demands** and **access-link 
 | [docs/INDEX.md](docs/INDEX.md) | Full docs map and reading order |
 | [docs/PROJECT_SPEC.md](docs/PROJECT_SPEC.md) | Formal problem statement and requirements |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Mesh vs SFU design, call anatomy, media paths |
+| [docs/SERVER_SIDE_EXPLAINED.md](docs/SERVER_SIDE_EXPLAINED.md) | Server-side working in plain words |
 | [docs/PROTOCOLS.md](docs/PROTOCOLS.md) | ICE/STUN, DTLS-SRTP, RTP/RTCP, signaling, NAT |
 | [docs/SETUP.md](docs/SETUP.md) | Environment, dependencies, LiveKit, tools |
 | [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md) | Step-by-step build guide (mesh → SFU → automation) |
