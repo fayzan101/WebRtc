@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { installAutomationApi, uninstallAutomationApi } from '../lib/automation';
+import {
+  createWaitUntilConnected,
+  installAutomationApi,
+  shouldAutojoin,
+  uninstallAutomationApi,
+} from '../lib/automation';
 import { readQueryDefaults } from '../lib/query';
 import { SfuRoomSession } from '../lib/sfuRoom';
 import {
@@ -59,20 +64,22 @@ export function useSfuRoom() {
       }
     }
     setLocalStream(null);
+    remotesRef.current = [];
     setRemotes([]);
     setPcCount(0);
     setStats(null);
     prevStatsRef.current = emptySnapshot();
-    window.__webrtcReady = false;
   }, []);
 
   const leave = useCallback(async () => {
     await cleanup();
+    statusRef.current = 'idle';
     setStatus('idle');
   }, [cleanup]);
 
   const join = useCallback(async () => {
     setError(null);
+    statusRef.current = 'joining';
     setStatus('joining');
     joinStartRef.current = performance.now();
     joinTimeMsRef.current = null;
@@ -90,17 +97,19 @@ export function useSfuRoom() {
         onRemoteMedia: (map) => setRemotes([...map.values()]),
         onError: (err) => {
           setError(err.message);
+          statusRef.current = 'failed';
           setStatus('failed');
         },
         onConnected: () => {
+          statusRef.current = 'connected';
           setStatus('connected');
-          window.__webrtcReady = true;
           if (joinStartRef.current != null && joinTimeMsRef.current == null) {
             joinTimeMsRef.current = performance.now() - joinStartRef.current;
           }
         },
         onDisconnected: () => {
           if (statusRef.current === 'connected') {
+            statusRef.current = 'idle';
             setStatus('idle');
           }
         },
@@ -114,8 +123,8 @@ export function useSfuRoom() {
       }
       setLocalStream(session.getLocalStream());
       setPcCount(countLiveKitPcs(session.room));
+      statusRef.current = 'connected';
       setStatus('connected');
-      window.__webrtcReady = true;
       if (joinStartRef.current != null && joinTimeMsRef.current == null) {
         joinTimeMsRef.current = performance.now() - joinStartRef.current;
       }
@@ -123,6 +132,7 @@ export function useSfuRoom() {
       const message = err instanceof Error ? err.message : String(err);
       await cleanup();
       setError(message);
+      statusRef.current = 'failed';
       setStatus('failed');
     }
   }, [cleanup, videoEnabled]);
@@ -167,7 +177,19 @@ export function useSfuRoom() {
     };
   }, [status]);
 
+  // Automation API (stable Puppeteer contract — Phase 4)
   useEffect(() => {
+    const waitUntilConnected = createWaitUntilConnected({
+      getStatus: () => statusRef.current,
+      getRemoteCount: () => remotesRef.current.length,
+      getBytesReceived: async () => {
+        const session = sessionRef.current;
+        if (!session) return 0;
+        const snap = await collectLiveKitStats(session.room);
+        return snap.bytesReceived;
+      },
+    });
+
     installAutomationApi({
       getReady: () => statusRef.current === 'connected',
       getStats: async () => {
@@ -190,49 +212,21 @@ export function useSfuRoom() {
         roomName: roomIdRef.current,
         remoteCount: remotesRef.current.length,
         status: statusRef.current,
+        mode: 'sfu',
       }),
       getJoinTimeMs: () => joinTimeMsRef.current,
-      waitUntilConnected: (nMinus1) =>
-        new Promise((resolve, reject) => {
-          const started = Date.now();
-          const iv = window.setInterval(async () => {
-            if (statusRef.current === 'failed') {
-              window.clearInterval(iv);
-              reject(new Error('call failed while waiting for remotes'));
-              return;
-            }
-            if (
-              statusRef.current === 'connected' &&
-              remotesRef.current.length >= nMinus1
-            ) {
-              const session = sessionRef.current;
-              if (session) {
-                const snap = await collectLiveKitStats(session.room);
-                if (snap.bytesReceived > 0 || nMinus1 === 0) {
-                  window.clearInterval(iv);
-                  resolve();
-                  return;
-                }
-              }
-            }
-            if (Date.now() - started > 60_000) {
-              window.clearInterval(iv);
-              reject(new Error(`timeout waiting for ${nMinus1} remotes`));
-            }
-          }, 250);
-        }),
+      waitUntilConnected,
       leave,
     });
-    window.__webrtcReady = status === 'connected';
     return () => uninstallAutomationApi();
-  }, [leave, status]);
+  }, [leave]);
 
   useEffect(() => {
-    if (query.autojoin && !autoJoinedRef.current) {
+    if (shouldAutojoin(window.location.search) && !autoJoinedRef.current) {
       autoJoinedRef.current = true;
       void join();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- autojoin once on mount
   }, []);
 
   useEffect(
