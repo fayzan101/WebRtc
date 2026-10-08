@@ -92,6 +92,7 @@ WebRtc/
 ├── sfu/
 │   ├── server/              # Express token API (Phase 3)
 │   └── client/              # React + Vite SFU UI
+├── dashboard/               # Results Dashboard (Phase 9)
 ├── automation/              # Puppeteer (Phase 5+)
 ├── scripts/
 └── results/
@@ -106,6 +107,8 @@ npm run mesh           # http://127.0.0.1:3000/health
 npm run sfu            # http://127.0.0.1:3001/health
 npm run mesh:client    # http://127.0.0.1:5173 (proxies /health)
 npm run sfu:client     # http://127.0.0.1:5174
+npm run dashboard      # http://127.0.0.1:5180/health (results API)
+npm run dashboard:client  # http://127.0.0.1:5181
 ```
 
 ## License Note

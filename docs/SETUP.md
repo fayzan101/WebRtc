@@ -82,6 +82,19 @@ Uses `LIVEKIT_URL` / `LIVEKIT_API_KEY` / `LIVEKIT_API_SECRET` from `.env` (defau
 
 If you see `LIVEKIT_API_KEY is required`, `.env` is missing. If `Port 3001 is already in use`, set `SFU_PORT=3002` (or any free port) in `.env` — Docker/WSL sometimes holds 3001 on Windows.
 
+### Results dashboard (Phase 9)
+
+```bash
+# Terminal A — API (:5180) lists results/ + fixtures
+npm run dashboard
+
+# Terminal B — UI (:5181) proxies /api → dashboard server
+npm run dashboard:client
+```
+
+Open http://localhost:5181/ — Overview / Compare N / Run detail.  
+Real runs: write schema-v1 JSON under `results/mesh/` or `results/sfu/` (see [DATA_SCHEMA.md](DATA_SCHEMA.md)); optional `results/summary/bitrate-vs-n.csv`. Until then, bundled fixtures under `dashboard/client/public/fixtures/` power the charts.
+
 ## 4. Puppeteer Automation
 
 ```bash
