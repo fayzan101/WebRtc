@@ -8,6 +8,8 @@
     "mesh/client",
     "sfu/server",
     "sfu/client",
+    "dashboard/server",
+    "dashboard/client",
     "automation",
     "shared"
   ],
@@ -16,14 +18,17 @@
     "mesh:client": "npm run dev -w @webrtc/mesh-client",
     "sfu": "npm run start -w @webrtc/sfu-server",
     "sfu:client": "npm run dev -w @webrtc/sfu-client",
+    "dashboard": "npm run start -w @webrtc/dashboard-server",
+    "dashboard:client": "npm run dev -w @webrtc/dashboard-client",
     "livekit": "node scripts/start-livekit.mjs",
     "matrix": "npm run matrix -w @webrtc/automation",
-    "build:clients": "npm run build -w @webrtc/mesh-client && npm run build -w @webrtc/sfu-client",
-    "test": "npm run test -w @webrtc/mesh-server && npm run test -w @webrtc/mesh-client && npm run test -w @webrtc/sfu-server && npm run test -w @webrtc/sfu-client",
+    "build:clients": "npm run build -w @webrtc/mesh-client && npm run build -w @webrtc/sfu-client && npm run build -w @webrtc/dashboard-client",
+    "test": "npm run test -w @webrtc/mesh-server && npm run test -w @webrtc/mesh-client && npm run test -w @webrtc/sfu-server && npm run test -w @webrtc/sfu-client && npm run test -w @webrtc/dashboard-server && npm run test -w @webrtc/dashboard-client",
     "test:mesh-server": "npm run test -w @webrtc/mesh-server",
     "test:mesh-client": "npm run test -w @webrtc/mesh-client",
     "test:sfu-server": "npm run test -w @webrtc/sfu-server",
-    "test:sfu-client": "npm run test -w @webrtc/sfu-client"
+    "test:sfu-client": "npm run test -w @webrtc/sfu-client",
+    "test:dashboard": "npm run test -w @webrtc/dashboard-server && npm run test -w @webrtc/dashboard-client"
   },
   "engines": {
     "node": ">=18"

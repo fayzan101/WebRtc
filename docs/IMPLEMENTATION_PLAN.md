@@ -440,6 +440,34 @@ Do **not** start advanced until Phase 7 acceptance passes.
 
 ---
 
+## Phase 9 — Results Dashboard
+
+**Goal:** browse schema-v1 experiment runs and plot mesh vs SFU scaling in the browser (not the in-call UI).
+
+### Implement (complete)
+
+- `dashboard/server` — Express API:
+  - `GET /api/runs` — list runs from `results/{mesh,sfu}` merged with `dashboard/client/public/fixtures` (results win on id clash)
+  - `GET /api/run?id=mesh/n2-uncapped-001.json` — full JSON
+  - `GET /api/summary` — `bitrate-vs-n.csv` (results preferred, else fixtures)
+- `dashboard/client` — React + Vite + Recharts:
+  - Overview (counts, latest mesh/SFU, fixture banner)
+  - Compare N (uplink/downlink vs N)
+  - Run detail (participant time series)
+- Bundled fixtures so the dashboard works before Phase 5–6 produce real files
+- Aggregate helpers: skip first ~10s for means; CSV parse; compare series
+
+### Acceptance
+
+- [ ] `npm run dashboard` + `npm run dashboard:client` render Overview / Compare / Run detail
+- [ ] Fixtures alone show mesh vs SFU curves
+- [ ] A file dropped into `results/mesh/` appears after Refresh without rebuild
+- [ ] Unit tests for catalog merge + CSV/aggregate edge cases
+
+**Exit gate:** experimenters can inspect scaling plots without opening raw JSON.
+
+---
+
 ## Cross-Phase Engineering Rules
 
 1. **No stub merges:** if a function exists, it works in a demo path.
@@ -465,6 +493,7 @@ Do **not** start advanced until Phase 7 acceptance passes.
 | 6 | Matrix + summarize | 1 |
 | 7 | tc + failure N | 1–2 |
 | 8 | Report polish | 1 |
+| 9 | Results dashboard | 1 |
 
 ---
 

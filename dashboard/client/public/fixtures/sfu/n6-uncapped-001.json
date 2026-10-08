@@ -1,0 +1,1590 @@
+{
+  "schemaVersion": 1,
+  "runId": "S6-U",
+  "mode": "sfu",
+  "n": 6,
+  "uplinkCap": "uncapped",
+  "cappedPeerId": "p1",
+  "media": "audio",
+  "durationSec": 40,
+  "sampleIntervalMs": 2000,
+  "startedAt": "2026-10-08T12:06:00.000Z",
+  "endedAt": "2026-10-08T12:06:40.000Z",
+  "joinTimeMs": 1240,
+  "host": {
+    "os": "win32",
+    "arch": "x64",
+    "cpuModel": "fixture",
+    "singleLaptop": true
+  },
+  "versions": {
+    "node": "20.x",
+    "chromium": "fixture",
+    "livekitServer": "1.13.9",
+    "livekitClient": "2.x"
+  },
+  "participants": [
+    {
+      "peerId": "p1",
+      "role": "capped",
+      "samples": [
+        {
+          "ts": 1791461160000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 35700,
+          "downlinkBitrateBps": 170000,
+          "rttMs": 10,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26,
+          "bytesSent": 50000,
+          "bytesReceived": 60000
+        },
+        {
+          "ts": 1791461162000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 37080,
+          "downlinkBitrateBps": 176100,
+          "rttMs": 10.04,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.1,
+          "bytesSent": 100000,
+          "bytesReceived": 120000
+        },
+        {
+          "ts": 1791461164000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 38460,
+          "downlinkBitrateBps": 182200,
+          "rttMs": 10.08,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.2,
+          "bytesSent": 150000,
+          "bytesReceived": 180000
+        },
+        {
+          "ts": 1791461166000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 39840,
+          "downlinkBitrateBps": 188300,
+          "rttMs": 10.12,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.3,
+          "bytesSent": 200000,
+          "bytesReceived": 240000
+        },
+        {
+          "ts": 1791461168000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 41220,
+          "downlinkBitrateBps": 194400,
+          "rttMs": 10.16,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.4,
+          "bytesSent": 250000,
+          "bytesReceived": 300000
+        },
+        {
+          "ts": 1791461170000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42600,
+          "downlinkBitrateBps": 200500,
+          "rttMs": 10.2,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.5,
+          "bytesSent": 300000,
+          "bytesReceived": 360000
+        },
+        {
+          "ts": 1791461172000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42720,
+          "downlinkBitrateBps": 200600,
+          "rttMs": 10.24,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.6,
+          "bytesSent": 350000,
+          "bytesReceived": 420000
+        },
+        {
+          "ts": 1791461174000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42840,
+          "downlinkBitrateBps": 200700,
+          "rttMs": 10.28,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.7,
+          "bytesSent": 400000,
+          "bytesReceived": 480000
+        },
+        {
+          "ts": 1791461176000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42960,
+          "downlinkBitrateBps": 200800,
+          "rttMs": 10.32,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.8,
+          "bytesSent": 450000,
+          "bytesReceived": 540000
+        },
+        {
+          "ts": 1791461178000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43080,
+          "downlinkBitrateBps": 200900,
+          "rttMs": 10.36,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.9,
+          "bytesSent": 500000,
+          "bytesReceived": 600000
+        },
+        {
+          "ts": 1791461180000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43200,
+          "downlinkBitrateBps": 201000,
+          "rttMs": 10.4,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27,
+          "bytesSent": 550000,
+          "bytesReceived": 660000
+        },
+        {
+          "ts": 1791461182000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43320,
+          "downlinkBitrateBps": 201100,
+          "rttMs": 10.44,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.1,
+          "bytesSent": 600000,
+          "bytesReceived": 720000
+        },
+        {
+          "ts": 1791461184000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43440,
+          "downlinkBitrateBps": 201200,
+          "rttMs": 10.48,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.2,
+          "bytesSent": 650000,
+          "bytesReceived": 780000
+        },
+        {
+          "ts": 1791461186000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43560,
+          "downlinkBitrateBps": 201300,
+          "rttMs": 10.52,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.3,
+          "bytesSent": 700000,
+          "bytesReceived": 840000
+        },
+        {
+          "ts": 1791461188000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43680,
+          "downlinkBitrateBps": 201400,
+          "rttMs": 10.56,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.4,
+          "bytesSent": 750000,
+          "bytesReceived": 900000
+        },
+        {
+          "ts": 1791461190000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43800,
+          "downlinkBitrateBps": 201500,
+          "rttMs": 10.6,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.5,
+          "bytesSent": 800000,
+          "bytesReceived": 960000
+        },
+        {
+          "ts": 1791461192000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43920,
+          "downlinkBitrateBps": 201600,
+          "rttMs": 10.64,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.6,
+          "bytesSent": 850000,
+          "bytesReceived": 1020000
+        },
+        {
+          "ts": 1791461194000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44040,
+          "downlinkBitrateBps": 201700,
+          "rttMs": 10.68,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.7,
+          "bytesSent": 900000,
+          "bytesReceived": 1080000
+        },
+        {
+          "ts": 1791461196000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44160,
+          "downlinkBitrateBps": 201800,
+          "rttMs": 10.72,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.8,
+          "bytesSent": 950000,
+          "bytesReceived": 1140000
+        },
+        {
+          "ts": 1791461198000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44280,
+          "downlinkBitrateBps": 201900,
+          "rttMs": 10.76,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.9,
+          "bytesSent": 1000000,
+          "bytesReceived": 1200000
+        }
+      ]
+    },
+    {
+      "peerId": "p2",
+      "role": "normal",
+      "samples": [
+        {
+          "ts": 1791461160000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 35700,
+          "downlinkBitrateBps": 170000,
+          "rttMs": 10,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26,
+          "bytesSent": 50000,
+          "bytesReceived": 60000
+        },
+        {
+          "ts": 1791461162000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 37080,
+          "downlinkBitrateBps": 176100,
+          "rttMs": 10.04,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.1,
+          "bytesSent": 100000,
+          "bytesReceived": 120000
+        },
+        {
+          "ts": 1791461164000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 38460,
+          "downlinkBitrateBps": 182200,
+          "rttMs": 10.08,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.2,
+          "bytesSent": 150000,
+          "bytesReceived": 180000
+        },
+        {
+          "ts": 1791461166000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 39840,
+          "downlinkBitrateBps": 188300,
+          "rttMs": 10.12,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.3,
+          "bytesSent": 200000,
+          "bytesReceived": 240000
+        },
+        {
+          "ts": 1791461168000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 41220,
+          "downlinkBitrateBps": 194400,
+          "rttMs": 10.16,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.4,
+          "bytesSent": 250000,
+          "bytesReceived": 300000
+        },
+        {
+          "ts": 1791461170000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42600,
+          "downlinkBitrateBps": 200500,
+          "rttMs": 10.2,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.5,
+          "bytesSent": 300000,
+          "bytesReceived": 360000
+        },
+        {
+          "ts": 1791461172000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42720,
+          "downlinkBitrateBps": 200600,
+          "rttMs": 10.24,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.6,
+          "bytesSent": 350000,
+          "bytesReceived": 420000
+        },
+        {
+          "ts": 1791461174000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42840,
+          "downlinkBitrateBps": 200700,
+          "rttMs": 10.28,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.7,
+          "bytesSent": 400000,
+          "bytesReceived": 480000
+        },
+        {
+          "ts": 1791461176000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42960,
+          "downlinkBitrateBps": 200800,
+          "rttMs": 10.32,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.8,
+          "bytesSent": 450000,
+          "bytesReceived": 540000
+        },
+        {
+          "ts": 1791461178000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43080,
+          "downlinkBitrateBps": 200900,
+          "rttMs": 10.36,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.9,
+          "bytesSent": 500000,
+          "bytesReceived": 600000
+        },
+        {
+          "ts": 1791461180000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43200,
+          "downlinkBitrateBps": 201000,
+          "rttMs": 10.4,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27,
+          "bytesSent": 550000,
+          "bytesReceived": 660000
+        },
+        {
+          "ts": 1791461182000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43320,
+          "downlinkBitrateBps": 201100,
+          "rttMs": 10.44,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.1,
+          "bytesSent": 600000,
+          "bytesReceived": 720000
+        },
+        {
+          "ts": 1791461184000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43440,
+          "downlinkBitrateBps": 201200,
+          "rttMs": 10.48,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.2,
+          "bytesSent": 650000,
+          "bytesReceived": 780000
+        },
+        {
+          "ts": 1791461186000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43560,
+          "downlinkBitrateBps": 201300,
+          "rttMs": 10.52,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.3,
+          "bytesSent": 700000,
+          "bytesReceived": 840000
+        },
+        {
+          "ts": 1791461188000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43680,
+          "downlinkBitrateBps": 201400,
+          "rttMs": 10.56,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.4,
+          "bytesSent": 750000,
+          "bytesReceived": 900000
+        },
+        {
+          "ts": 1791461190000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43800,
+          "downlinkBitrateBps": 201500,
+          "rttMs": 10.6,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.5,
+          "bytesSent": 800000,
+          "bytesReceived": 960000
+        },
+        {
+          "ts": 1791461192000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43920,
+          "downlinkBitrateBps": 201600,
+          "rttMs": 10.64,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.6,
+          "bytesSent": 850000,
+          "bytesReceived": 1020000
+        },
+        {
+          "ts": 1791461194000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44040,
+          "downlinkBitrateBps": 201700,
+          "rttMs": 10.68,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.7,
+          "bytesSent": 900000,
+          "bytesReceived": 1080000
+        },
+        {
+          "ts": 1791461196000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44160,
+          "downlinkBitrateBps": 201800,
+          "rttMs": 10.72,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.8,
+          "bytesSent": 950000,
+          "bytesReceived": 1140000
+        },
+        {
+          "ts": 1791461198000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44280,
+          "downlinkBitrateBps": 201900,
+          "rttMs": 10.76,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.9,
+          "bytesSent": 1000000,
+          "bytesReceived": 1200000
+        }
+      ]
+    },
+    {
+      "peerId": "p3",
+      "role": "normal",
+      "samples": [
+        {
+          "ts": 1791461160000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 35700,
+          "downlinkBitrateBps": 170000,
+          "rttMs": 10,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26,
+          "bytesSent": 50000,
+          "bytesReceived": 60000
+        },
+        {
+          "ts": 1791461162000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 37080,
+          "downlinkBitrateBps": 176100,
+          "rttMs": 10.04,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.1,
+          "bytesSent": 100000,
+          "bytesReceived": 120000
+        },
+        {
+          "ts": 1791461164000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 38460,
+          "downlinkBitrateBps": 182200,
+          "rttMs": 10.08,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.2,
+          "bytesSent": 150000,
+          "bytesReceived": 180000
+        },
+        {
+          "ts": 1791461166000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 39840,
+          "downlinkBitrateBps": 188300,
+          "rttMs": 10.12,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.3,
+          "bytesSent": 200000,
+          "bytesReceived": 240000
+        },
+        {
+          "ts": 1791461168000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 41220,
+          "downlinkBitrateBps": 194400,
+          "rttMs": 10.16,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.4,
+          "bytesSent": 250000,
+          "bytesReceived": 300000
+        },
+        {
+          "ts": 1791461170000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42600,
+          "downlinkBitrateBps": 200500,
+          "rttMs": 10.2,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.5,
+          "bytesSent": 300000,
+          "bytesReceived": 360000
+        },
+        {
+          "ts": 1791461172000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42720,
+          "downlinkBitrateBps": 200600,
+          "rttMs": 10.24,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.6,
+          "bytesSent": 350000,
+          "bytesReceived": 420000
+        },
+        {
+          "ts": 1791461174000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42840,
+          "downlinkBitrateBps": 200700,
+          "rttMs": 10.28,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.7,
+          "bytesSent": 400000,
+          "bytesReceived": 480000
+        },
+        {
+          "ts": 1791461176000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42960,
+          "downlinkBitrateBps": 200800,
+          "rttMs": 10.32,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.8,
+          "bytesSent": 450000,
+          "bytesReceived": 540000
+        },
+        {
+          "ts": 1791461178000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43080,
+          "downlinkBitrateBps": 200900,
+          "rttMs": 10.36,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.9,
+          "bytesSent": 500000,
+          "bytesReceived": 600000
+        },
+        {
+          "ts": 1791461180000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43200,
+          "downlinkBitrateBps": 201000,
+          "rttMs": 10.4,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27,
+          "bytesSent": 550000,
+          "bytesReceived": 660000
+        },
+        {
+          "ts": 1791461182000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43320,
+          "downlinkBitrateBps": 201100,
+          "rttMs": 10.44,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.1,
+          "bytesSent": 600000,
+          "bytesReceived": 720000
+        },
+        {
+          "ts": 1791461184000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43440,
+          "downlinkBitrateBps": 201200,
+          "rttMs": 10.48,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.2,
+          "bytesSent": 650000,
+          "bytesReceived": 780000
+        },
+        {
+          "ts": 1791461186000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43560,
+          "downlinkBitrateBps": 201300,
+          "rttMs": 10.52,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.3,
+          "bytesSent": 700000,
+          "bytesReceived": 840000
+        },
+        {
+          "ts": 1791461188000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43680,
+          "downlinkBitrateBps": 201400,
+          "rttMs": 10.56,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.4,
+          "bytesSent": 750000,
+          "bytesReceived": 900000
+        },
+        {
+          "ts": 1791461190000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43800,
+          "downlinkBitrateBps": 201500,
+          "rttMs": 10.6,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.5,
+          "bytesSent": 800000,
+          "bytesReceived": 960000
+        },
+        {
+          "ts": 1791461192000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43920,
+          "downlinkBitrateBps": 201600,
+          "rttMs": 10.64,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.6,
+          "bytesSent": 850000,
+          "bytesReceived": 1020000
+        },
+        {
+          "ts": 1791461194000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44040,
+          "downlinkBitrateBps": 201700,
+          "rttMs": 10.68,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.7,
+          "bytesSent": 900000,
+          "bytesReceived": 1080000
+        },
+        {
+          "ts": 1791461196000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44160,
+          "downlinkBitrateBps": 201800,
+          "rttMs": 10.72,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.8,
+          "bytesSent": 950000,
+          "bytesReceived": 1140000
+        },
+        {
+          "ts": 1791461198000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44280,
+          "downlinkBitrateBps": 201900,
+          "rttMs": 10.76,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.9,
+          "bytesSent": 1000000,
+          "bytesReceived": 1200000
+        }
+      ]
+    },
+    {
+      "peerId": "p4",
+      "role": "normal",
+      "samples": [
+        {
+          "ts": 1791461160000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 35700,
+          "downlinkBitrateBps": 170000,
+          "rttMs": 10,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26,
+          "bytesSent": 50000,
+          "bytesReceived": 60000
+        },
+        {
+          "ts": 1791461162000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 37080,
+          "downlinkBitrateBps": 176100,
+          "rttMs": 10.04,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.1,
+          "bytesSent": 100000,
+          "bytesReceived": 120000
+        },
+        {
+          "ts": 1791461164000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 38460,
+          "downlinkBitrateBps": 182200,
+          "rttMs": 10.08,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.2,
+          "bytesSent": 150000,
+          "bytesReceived": 180000
+        },
+        {
+          "ts": 1791461166000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 39840,
+          "downlinkBitrateBps": 188300,
+          "rttMs": 10.12,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.3,
+          "bytesSent": 200000,
+          "bytesReceived": 240000
+        },
+        {
+          "ts": 1791461168000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 41220,
+          "downlinkBitrateBps": 194400,
+          "rttMs": 10.16,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.4,
+          "bytesSent": 250000,
+          "bytesReceived": 300000
+        },
+        {
+          "ts": 1791461170000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42600,
+          "downlinkBitrateBps": 200500,
+          "rttMs": 10.2,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.5,
+          "bytesSent": 300000,
+          "bytesReceived": 360000
+        },
+        {
+          "ts": 1791461172000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42720,
+          "downlinkBitrateBps": 200600,
+          "rttMs": 10.24,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.6,
+          "bytesSent": 350000,
+          "bytesReceived": 420000
+        },
+        {
+          "ts": 1791461174000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42840,
+          "downlinkBitrateBps": 200700,
+          "rttMs": 10.28,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.7,
+          "bytesSent": 400000,
+          "bytesReceived": 480000
+        },
+        {
+          "ts": 1791461176000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42960,
+          "downlinkBitrateBps": 200800,
+          "rttMs": 10.32,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.8,
+          "bytesSent": 450000,
+          "bytesReceived": 540000
+        },
+        {
+          "ts": 1791461178000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43080,
+          "downlinkBitrateBps": 200900,
+          "rttMs": 10.36,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.9,
+          "bytesSent": 500000,
+          "bytesReceived": 600000
+        },
+        {
+          "ts": 1791461180000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43200,
+          "downlinkBitrateBps": 201000,
+          "rttMs": 10.4,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27,
+          "bytesSent": 550000,
+          "bytesReceived": 660000
+        },
+        {
+          "ts": 1791461182000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43320,
+          "downlinkBitrateBps": 201100,
+          "rttMs": 10.44,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.1,
+          "bytesSent": 600000,
+          "bytesReceived": 720000
+        },
+        {
+          "ts": 1791461184000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43440,
+          "downlinkBitrateBps": 201200,
+          "rttMs": 10.48,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.2,
+          "bytesSent": 650000,
+          "bytesReceived": 780000
+        },
+        {
+          "ts": 1791461186000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43560,
+          "downlinkBitrateBps": 201300,
+          "rttMs": 10.52,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.3,
+          "bytesSent": 700000,
+          "bytesReceived": 840000
+        },
+        {
+          "ts": 1791461188000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43680,
+          "downlinkBitrateBps": 201400,
+          "rttMs": 10.56,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.4,
+          "bytesSent": 750000,
+          "bytesReceived": 900000
+        },
+        {
+          "ts": 1791461190000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43800,
+          "downlinkBitrateBps": 201500,
+          "rttMs": 10.6,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.5,
+          "bytesSent": 800000,
+          "bytesReceived": 960000
+        },
+        {
+          "ts": 1791461192000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43920,
+          "downlinkBitrateBps": 201600,
+          "rttMs": 10.64,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.6,
+          "bytesSent": 850000,
+          "bytesReceived": 1020000
+        },
+        {
+          "ts": 1791461194000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44040,
+          "downlinkBitrateBps": 201700,
+          "rttMs": 10.68,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.7,
+          "bytesSent": 900000,
+          "bytesReceived": 1080000
+        },
+        {
+          "ts": 1791461196000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44160,
+          "downlinkBitrateBps": 201800,
+          "rttMs": 10.72,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.8,
+          "bytesSent": 950000,
+          "bytesReceived": 1140000
+        },
+        {
+          "ts": 1791461198000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44280,
+          "downlinkBitrateBps": 201900,
+          "rttMs": 10.76,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.9,
+          "bytesSent": 1000000,
+          "bytesReceived": 1200000
+        }
+      ]
+    },
+    {
+      "peerId": "p5",
+      "role": "normal",
+      "samples": [
+        {
+          "ts": 1791461160000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 35700,
+          "downlinkBitrateBps": 170000,
+          "rttMs": 10,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26,
+          "bytesSent": 50000,
+          "bytesReceived": 60000
+        },
+        {
+          "ts": 1791461162000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 37080,
+          "downlinkBitrateBps": 176100,
+          "rttMs": 10.04,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.1,
+          "bytesSent": 100000,
+          "bytesReceived": 120000
+        },
+        {
+          "ts": 1791461164000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 38460,
+          "downlinkBitrateBps": 182200,
+          "rttMs": 10.08,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.2,
+          "bytesSent": 150000,
+          "bytesReceived": 180000
+        },
+        {
+          "ts": 1791461166000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 39840,
+          "downlinkBitrateBps": 188300,
+          "rttMs": 10.12,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.3,
+          "bytesSent": 200000,
+          "bytesReceived": 240000
+        },
+        {
+          "ts": 1791461168000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 41220,
+          "downlinkBitrateBps": 194400,
+          "rttMs": 10.16,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.4,
+          "bytesSent": 250000,
+          "bytesReceived": 300000
+        },
+        {
+          "ts": 1791461170000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42600,
+          "downlinkBitrateBps": 200500,
+          "rttMs": 10.2,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.5,
+          "bytesSent": 300000,
+          "bytesReceived": 360000
+        },
+        {
+          "ts": 1791461172000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42720,
+          "downlinkBitrateBps": 200600,
+          "rttMs": 10.24,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.6,
+          "bytesSent": 350000,
+          "bytesReceived": 420000
+        },
+        {
+          "ts": 1791461174000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42840,
+          "downlinkBitrateBps": 200700,
+          "rttMs": 10.28,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.7,
+          "bytesSent": 400000,
+          "bytesReceived": 480000
+        },
+        {
+          "ts": 1791461176000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42960,
+          "downlinkBitrateBps": 200800,
+          "rttMs": 10.32,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.8,
+          "bytesSent": 450000,
+          "bytesReceived": 540000
+        },
+        {
+          "ts": 1791461178000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43080,
+          "downlinkBitrateBps": 200900,
+          "rttMs": 10.36,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.9,
+          "bytesSent": 500000,
+          "bytesReceived": 600000
+        },
+        {
+          "ts": 1791461180000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43200,
+          "downlinkBitrateBps": 201000,
+          "rttMs": 10.4,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27,
+          "bytesSent": 550000,
+          "bytesReceived": 660000
+        },
+        {
+          "ts": 1791461182000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43320,
+          "downlinkBitrateBps": 201100,
+          "rttMs": 10.44,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.1,
+          "bytesSent": 600000,
+          "bytesReceived": 720000
+        },
+        {
+          "ts": 1791461184000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43440,
+          "downlinkBitrateBps": 201200,
+          "rttMs": 10.48,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.2,
+          "bytesSent": 650000,
+          "bytesReceived": 780000
+        },
+        {
+          "ts": 1791461186000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43560,
+          "downlinkBitrateBps": 201300,
+          "rttMs": 10.52,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.3,
+          "bytesSent": 700000,
+          "bytesReceived": 840000
+        },
+        {
+          "ts": 1791461188000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43680,
+          "downlinkBitrateBps": 201400,
+          "rttMs": 10.56,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.4,
+          "bytesSent": 750000,
+          "bytesReceived": 900000
+        },
+        {
+          "ts": 1791461190000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43800,
+          "downlinkBitrateBps": 201500,
+          "rttMs": 10.6,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.5,
+          "bytesSent": 800000,
+          "bytesReceived": 960000
+        },
+        {
+          "ts": 1791461192000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43920,
+          "downlinkBitrateBps": 201600,
+          "rttMs": 10.64,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.6,
+          "bytesSent": 850000,
+          "bytesReceived": 1020000
+        },
+        {
+          "ts": 1791461194000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44040,
+          "downlinkBitrateBps": 201700,
+          "rttMs": 10.68,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.7,
+          "bytesSent": 900000,
+          "bytesReceived": 1080000
+        },
+        {
+          "ts": 1791461196000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44160,
+          "downlinkBitrateBps": 201800,
+          "rttMs": 10.72,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.8,
+          "bytesSent": 950000,
+          "bytesReceived": 1140000
+        },
+        {
+          "ts": 1791461198000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44280,
+          "downlinkBitrateBps": 201900,
+          "rttMs": 10.76,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.9,
+          "bytesSent": 1000000,
+          "bytesReceived": 1200000
+        }
+      ]
+    },
+    {
+      "peerId": "p6",
+      "role": "normal",
+      "samples": [
+        {
+          "ts": 1791461160000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 35700,
+          "downlinkBitrateBps": 170000,
+          "rttMs": 10,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26,
+          "bytesSent": 50000,
+          "bytesReceived": 60000
+        },
+        {
+          "ts": 1791461162000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 37080,
+          "downlinkBitrateBps": 176100,
+          "rttMs": 10.04,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.1,
+          "bytesSent": 100000,
+          "bytesReceived": 120000
+        },
+        {
+          "ts": 1791461164000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 38460,
+          "downlinkBitrateBps": 182200,
+          "rttMs": 10.08,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.2,
+          "bytesSent": 150000,
+          "bytesReceived": 180000
+        },
+        {
+          "ts": 1791461166000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 39840,
+          "downlinkBitrateBps": 188300,
+          "rttMs": 10.12,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.3,
+          "bytesSent": 200000,
+          "bytesReceived": 240000
+        },
+        {
+          "ts": 1791461168000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 41220,
+          "downlinkBitrateBps": 194400,
+          "rttMs": 10.16,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.4,
+          "bytesSent": 250000,
+          "bytesReceived": 300000
+        },
+        {
+          "ts": 1791461170000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42600,
+          "downlinkBitrateBps": 200500,
+          "rttMs": 10.2,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.5,
+          "bytesSent": 300000,
+          "bytesReceived": 360000
+        },
+        {
+          "ts": 1791461172000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42720,
+          "downlinkBitrateBps": 200600,
+          "rttMs": 10.24,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.6,
+          "bytesSent": 350000,
+          "bytesReceived": 420000
+        },
+        {
+          "ts": 1791461174000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42840,
+          "downlinkBitrateBps": 200700,
+          "rttMs": 10.28,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.7,
+          "bytesSent": 400000,
+          "bytesReceived": 480000
+        },
+        {
+          "ts": 1791461176000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 42960,
+          "downlinkBitrateBps": 200800,
+          "rttMs": 10.32,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.8,
+          "bytesSent": 450000,
+          "bytesReceived": 540000
+        },
+        {
+          "ts": 1791461178000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43080,
+          "downlinkBitrateBps": 200900,
+          "rttMs": 10.36,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 26.9,
+          "bytesSent": 500000,
+          "bytesReceived": 600000
+        },
+        {
+          "ts": 1791461180000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43200,
+          "downlinkBitrateBps": 201000,
+          "rttMs": 10.4,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27,
+          "bytesSent": 550000,
+          "bytesReceived": 660000
+        },
+        {
+          "ts": 1791461182000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43320,
+          "downlinkBitrateBps": 201100,
+          "rttMs": 10.44,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.1,
+          "bytesSent": 600000,
+          "bytesReceived": 720000
+        },
+        {
+          "ts": 1791461184000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43440,
+          "downlinkBitrateBps": 201200,
+          "rttMs": 10.48,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.2,
+          "bytesSent": 650000,
+          "bytesReceived": 780000
+        },
+        {
+          "ts": 1791461186000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43560,
+          "downlinkBitrateBps": 201300,
+          "rttMs": 10.52,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.3,
+          "bytesSent": 700000,
+          "bytesReceived": 840000
+        },
+        {
+          "ts": 1791461188000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43680,
+          "downlinkBitrateBps": 201400,
+          "rttMs": 10.56,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.4,
+          "bytesSent": 750000,
+          "bytesReceived": 900000
+        },
+        {
+          "ts": 1791461190000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43800,
+          "downlinkBitrateBps": 201500,
+          "rttMs": 10.6,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.5,
+          "bytesSent": 800000,
+          "bytesReceived": 960000
+        },
+        {
+          "ts": 1791461192000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 43920,
+          "downlinkBitrateBps": 201600,
+          "rttMs": 10.64,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.6,
+          "bytesSent": 850000,
+          "bytesReceived": 1020000
+        },
+        {
+          "ts": 1791461194000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44040,
+          "downlinkBitrateBps": 201700,
+          "rttMs": 10.68,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.7,
+          "bytesSent": 900000,
+          "bytesReceived": 1080000
+        },
+        {
+          "ts": 1791461196000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44160,
+          "downlinkBitrateBps": 201800,
+          "rttMs": 10.72,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.8,
+          "bytesSent": 950000,
+          "bytesReceived": 1140000
+        },
+        {
+          "ts": 1791461198000,
+          "remoteCount": 5,
+          "uplinkBitrateBps": 44280,
+          "downlinkBitrateBps": 201900,
+          "rttMs": 10.76,
+          "jitterMs": 3.8,
+          "lossRatio": 0.002,
+          "cpuPercent": 27.9,
+          "bytesSent": 1000000,
+          "bytesReceived": 1200000
+        }
+      ]
+    }
+  ],
+  "sfu": {
+    "pid": 1,
+    "samples": [
+      {
+        "ts": 1791461160000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461162000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461164000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461166000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461168000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461170000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461172000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461174000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461176000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461178000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461180000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461182000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461184000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461186000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461188000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461190000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461192000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461194000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461196000,
+        "cpuPercent": 14
+      },
+      {
+        "ts": 1791461198000,
+        "cpuPercent": 14
+      }
+    ]
+  },
+  "notes": "Phase 9 fixture"
+}
