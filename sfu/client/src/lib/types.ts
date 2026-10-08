@@ -22,6 +22,7 @@ export type RemoteMedia = {
 
 declare global {
   interface Window {
+    /** Live getter — true when status === 'connected'. */
     __webrtcReady?: boolean;
     __webrtcStats?: () => Promise<StatsSample>;
     __sfuDebug?: () => {
@@ -29,6 +30,7 @@ declare global {
       roomName: string;
       remoteCount: number;
       status: CallStatus;
+      mode: 'sfu';
     };
     __waitUntilConnected?: (nMinus1: number) => Promise<void>;
     __getJoinTimeMs?: () => number | null;

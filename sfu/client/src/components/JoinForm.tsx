@@ -42,10 +42,14 @@ export function JoinForm({
           id="call-status"
           className={`status-pill status-${status}`}
           data-testid="status"
+          data-status={status}
           aria-live="polite"
         >
           <span className="status-dot" />
-          {STATUS_LABEL[status]}
+          <span className="status-label">{STATUS_LABEL[status]}</span>
+          <span className="status-raw" hidden>
+            {status}
+          </span>
         </span>
       </div>
 

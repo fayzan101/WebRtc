@@ -18,3 +18,20 @@ export function peerIdsForN(n) {
 }
 
 export const SCHEMA_VERSION = 1;
+
+/** Stable Puppeteer window hooks (Phase 4). */
+export const AUTOMATION_HOOKS = Object.freeze([
+  '__webrtcReady',
+  '__webrtcStats',
+  '__waitUntilConnected',
+  '__getJoinTimeMs',
+  '__leave',
+]);
+
+export const AUTOMATION_STATUS_TESTID = 'status';
+export const AUTOMATION_STATUS_VALUES = Object.freeze([
+  'idle',
+  'joining',
+  'connected',
+  'failed',
+]);

@@ -22,6 +22,16 @@ describe('readQueryDefaults', () => {
       stun: false,
     });
   });
+
+  it('accepts roomName/identity aliases for automation parity', () => {
+    expect(readQueryDefaults('?roomName=lab&identity=p3&autojoin=1')).toEqual({
+      roomId: 'lab',
+      peerId: 'p3',
+      autojoin: true,
+      video: false,
+      stun: false,
+    });
+  });
 });
 
 describe('iceServersFromSearch', () => {

@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { installAutomationApi, uninstallAutomationApi } from '../lib/automation';
+import {
+  createWaitUntilConnected,
+  installAutomationApi,
+  shouldAutojoin,
+  uninstallAutomationApi,
+} from '../lib/automation';
 import { iceServersFromSearch, MeshEngine, readQueryDefaults } from '../lib/mesh';
 import { MeshSignaling } from '../lib/signaling';
 import {
@@ -78,12 +83,12 @@ export function useMeshRoom(): UseMeshRoomResult {
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
     setLocalStream(null);
+    remotesRef.current = [];
+    pcCountRef.current = 0;
     setRemotes([]);
     setPcCount(0);
     setStats(null);
     prevStatsRef.current = emptySnapshot();
-    joinStartRef.current = null;
-    window.__webrtcReady = false;
   }, []);
 
   const leave = useCallback(async () => {
@@ -97,14 +102,16 @@ export function useMeshRoom(): UseMeshRoomResult {
       }
     } finally {
       cleanupMedia();
+      joinStartRef.current = null;
+      statusRef.current = 'idle';
       setStatus('idle');
     }
   }, [cleanupMedia]);
 
   const join = useCallback(async () => {
     setError(null);
+    statusRef.current = 'joining';
     setStatus('joining');
-    joinStartRef.current = performance.now();
     joinTimeMsRef.current = null;
 
     try {
@@ -116,6 +123,7 @@ export function useMeshRoom(): UseMeshRoomResult {
 
       // Leave any prior session first
       cleanupMedia();
+      joinStartRef.current = performance.now();
 
       const wantVideo = videoEnabled;
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -148,8 +156,8 @@ export function useMeshRoom(): UseMeshRoomResult {
             ? (msg.payload?.peers as string[])
             : [];
           await engine.handleJoined(peers);
+          statusRef.current = 'connected';
           setStatus('connected');
-          window.__webrtcReady = true;
           if (joinStartRef.current != null && joinTimeMsRef.current == null) {
             joinTimeMsRef.current = performance.now() - joinStartRef.current;
           }
@@ -171,10 +179,12 @@ export function useMeshRoom(): UseMeshRoomResult {
         },
         onServerError: (msg) => {
           setError(String(msg.payload?.message ?? 'Signaling error'));
+          statusRef.current = 'failed';
           setStatus('failed');
         },
         onError: (err) => {
           setError(err.message);
+          statusRef.current = 'failed';
           setStatus('failed');
         },
       });
@@ -185,6 +195,7 @@ export function useMeshRoom(): UseMeshRoomResult {
       const message = err instanceof Error ? err.message : String(err);
       cleanupMedia();
       setError(message);
+      statusRef.current = 'failed';
       setStatus('failed');
     }
   }, [cleanupMedia, videoEnabled]);
@@ -230,8 +241,19 @@ export function useMeshRoom(): UseMeshRoomResult {
     };
   }, [status]);
 
-  // Automation API
+  // Automation API (stable Puppeteer contract — Phase 4)
   useEffect(() => {
+    const waitUntilConnected = createWaitUntilConnected({
+      getStatus: () => statusRef.current,
+      getRemoteCount: () => remotesRef.current.length,
+      getBytesReceived: async () => {
+        const engine = engineRef.current;
+        if (!engine) return 0;
+        const snap = await collectPeerConnectionStats(engine.getPeerConnections());
+        return snap.bytesReceived;
+      },
+    });
+
     installAutomationApi({
       getReady: () => statusRef.current === 'connected',
       getStats: async () => {
@@ -260,46 +282,18 @@ export function useMeshRoom(): UseMeshRoomResult {
         remoteCount: remotesRef.current.length,
         pcCount: pcCountRef.current,
         status: statusRef.current,
+        mode: 'mesh',
       }),
       getJoinTimeMs: () => joinTimeMsRef.current,
-      waitUntilConnected: (nMinus1) =>
-        new Promise((resolve, reject) => {
-          const started = Date.now();
-          const iv = window.setInterval(async () => {
-            if (statusRef.current === 'failed') {
-              window.clearInterval(iv);
-              reject(new Error('call failed while waiting for remotes'));
-              return;
-            }
-            if (
-              statusRef.current === 'connected' &&
-              remotesRef.current.length >= nMinus1
-            ) {
-              const engine = engineRef.current;
-              if (engine) {
-                const snap = await collectPeerConnectionStats(engine.getPeerConnections());
-                if (snap.bytesReceived > 0 || nMinus1 === 0) {
-                  window.clearInterval(iv);
-                  resolve();
-                  return;
-                }
-              }
-            }
-            if (Date.now() - started > 60_000) {
-              window.clearInterval(iv);
-              reject(new Error(`timeout waiting for ${nMinus1} remotes`));
-            }
-          }, 250);
-        }),
+      waitUntilConnected,
       leave,
     });
-    window.__webrtcReady = status === 'connected';
     return () => uninstallAutomationApi();
-  }, [leave, status]);
+  }, [leave]);
 
-  // Autojoin from query
+  // Autojoin from query (requires room + peer)
   useEffect(() => {
-    if (query.autojoin && !autoJoinedRef.current) {
+    if (shouldAutojoin(window.location.search) && !autoJoinedRef.current) {
       autoJoinedRef.current = true;
       void join();
     }
