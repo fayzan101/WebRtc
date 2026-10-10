@@ -1,0 +1,7 @@
+mode,n,uplinkCap,trial,uplinkKbpsMean,downlinkKbpsMean,rttMsMean,jitterMsMean,lossMean,cpuClientMean,cpuSfuMean,joinTimeMs
+mesh,2,uncapped,001,41.44,39.20,11.00,2.60,0.0020,32.40,,1260
+mesh,4,uncapped,001,121.44,115.20,13.40,3.20,0.0020,44.40,,1620
+mesh,6,uncapped,001,201.44,191.20,15.80,3.80,0.0120,56.40,,1980
+sfu,2,uncapped,001,43.44,41.20,10.48,2.60,0.0020,19.20,10.00,880
+sfu,4,uncapped,001,43.44,121.20,10.48,3.20,0.0020,23.20,12.00,1060
+sfu,6,uncapped,001,43.44,201.20,10.48,3.80,0.0020,27.20,14.00,1240
