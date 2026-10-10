@@ -21,5 +21,5 @@ console.log(JSON.stringify({
       status: 'pending-phase-6',
     })),
   ),
-  next: 'Implement Puppeteer runOnce (Phase 5) then runMatrix (Phase 6).',
+  next: 'Use npm run run-once for Phase 5 single runs; full matrix is Phase 6.',
 }, null, 2));
