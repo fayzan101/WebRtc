@@ -93,12 +93,12 @@ WebRtc/
 │   ├── server/              # Express token API (Phase 3)
 │   └── client/              # React + Vite SFU UI
 ├── dashboard/               # Results Dashboard (Phase 9)
-├── automation/              # Puppeteer (Phase 5+)
+├── automation/              # Puppeteer runOnce (Phase 5+)
 ├── scripts/
 └── results/
 ```
 
-## Quick start (Phase 0)
+## Quick start
 
 ```bash
 npm install
@@ -109,6 +109,9 @@ npm run mesh:client    # http://127.0.0.1:5173 (proxies /health)
 npm run sfu:client     # http://127.0.0.1:5174
 npm run dashboard      # http://127.0.0.1:5180/health (results API)
 npm run dashboard:client  # http://127.0.0.1:5181
+
+# Phase 5 — one headless run (mesh client must already be up)
+npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
 ```
 
 ## License Note
