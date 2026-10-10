@@ -95,14 +95,23 @@ npm run dashboard:client
 Open http://localhost:5181/ — Overview / Compare N / Run detail.  
 Real runs: write schema-v1 JSON under `results/mesh/` or `results/sfu/` (see [DATA_SCHEMA.md](DATA_SCHEMA.md)); optional `results/summary/bitrate-vs-n.csv`. Until then, bundled fixtures under `dashboard/client/public/fixtures/` power the charts.
 
-## 4. Puppeteer Automation
+## 4. Puppeteer Automation (Phase 5)
+
+From repo root (`npm install` already pulls `puppeteer` + `pidusage` into `@webrtc/automation`):
 
 ```bash
-cd automation
-npm install puppeteer
+# Mesh path — signaling + Vite client must be up
+npm run mesh
+npm run mesh:client
+
+# Single run → results/mesh/n2-uncapped-001.json
+npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
 ```
 
-Useful Chromium flags for fake media:
+SFU path: start LiveKit + `npm run sfu` + `npm run sfu:client`, then `--mode sfu`.  
+Optional SFU CPU: set `LIVEKIT_PID` (or `SFU_PID`) in `.env` to the LiveKit process id.
+
+Useful Chromium flags (applied by `launchParticipants`):
 
 ```text
 --use-fake-device-for-media-stream
@@ -110,7 +119,7 @@ Useful Chromium flags for fake media:
 --autoplay-policy=no-user-gesture-required
 ```
 
-Optional: `--use-file-for-fake-audio-capture=/path/to/audio.wav` for repeatable audio.
+Optional: `--audio-file /path/to/audio.wav` → `--use-file-for-fake-audio-capture=…`.
 
 ## 5. Wireshark (Optional)
 

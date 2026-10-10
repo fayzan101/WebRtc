@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "matrix": "node src/matrix.js",
-    "run-once": "node src/runOnce.js"
+    "run-once": "node src/runOnce.js",
+    "test": "node --test test/"
   },
   "dependencies": {
-    "@webrtc/shared": "0.1.0"
+    "@webrtc/shared": "0.1.0",
+    "dotenv": "^16.4.7",
+    "pidusage": "^3.0.2",
+    "puppeteer": "^24.2.0"
   }
 }
