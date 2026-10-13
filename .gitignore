@@ -1,8 +1,6 @@
 node_modules/
 dist/
 build/
-.env
-.env.*
 !.env.example
 *.log
 .DS_Store
@@ -11,10 +9,10 @@ results/**/*.json
 !results/**/.gitkeep
 results/**/*.csv
 .idea/
-.vscode/
 coverage/
 tmp/
 *.pcap
 *.pcapng
 *.tsbuildinfo
 .vite/
+config.bat

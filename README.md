@@ -112,6 +112,10 @@ npm run dashboard:client  # http://127.0.0.1:5181
 
 # Phase 5 — one headless run (mesh client must already be up)
 npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
+
+# Phase 6 — matrix + summarize (clients/LiveKit up as needed)
+npm run matrix -- --dry-run
+npm run summarize
 ```
 
 ## License Note
