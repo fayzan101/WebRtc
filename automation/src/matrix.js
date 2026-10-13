@@ -1,25 +1,7 @@
-import { peerIdsForN, DEFAULT_ROOM_ID, SCHEMA_VERSION } from '@webrtc/shared';
-
 /**
- * Phase 0 entrypoint for `npm run matrix`.
- * Full Puppeteer matrix lands in Phase 6 — this validates shared contracts
- * and prints the planned run grid so the workspace script is real today.
+ * Phase 0 scaffold replaced by Phase 6 `runMatrix.js`.
+ * Keep this entry so older docs that say `node src/matrix.js` still work.
  */
-const modes = ['mesh', 'sfu'];
-const ns = [2, 3, 4, 5, 6];
+import { main } from './runMatrix.js';
 
-console.log(JSON.stringify({
-  msg: 'automation matrix scaffold',
-  phase: 0,
-  schemaVersion: SCHEMA_VERSION,
-  defaultRoomId: DEFAULT_ROOM_ID,
-  plannedRuns: modes.flatMap((mode) =>
-    ns.map((n) => ({
-      mode,
-      n,
-      peers: peerIdsForN(n),
-      status: 'pending-phase-6',
-    })),
-  ),
-  next: 'Use npm run run-once for Phase 5 single runs; full matrix is Phase 6.',
-}, null, 2));
+await main(process.argv.slice(2));

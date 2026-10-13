@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "matrix": "node src/matrix.js",
+    "matrix": "node src/runMatrix.js",
     "run-once": "node src/runOnce.js",
+    "summarize": "node ../scripts/summarize-results.mjs",
     "test": "node --test test/"
   },
   "dependencies": {
