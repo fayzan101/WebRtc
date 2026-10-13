@@ -106,9 +106,16 @@ npm run mesh:client
 
 # Single run → results/mesh/n2-uncapped-001.json
 npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
+
+# Phase 6 — uncapped matrix (mesh+sfu × N=2..6) then CSV summary
+npm run matrix -- --dry-run
+npm run matrix -- --duration 90 --cooldown 15
+npm run summarize
+# → results/summary/bitrate-vs-n.csv + markdown tables on stdout
+# fixtures dry-check: npm run summarize -- --results dashboard/client/public/fixtures
 ```
 
-SFU path: start LiveKit + `npm run sfu` + `npm run sfu:client`, then `--mode sfu`.  
+SFU path: start LiveKit + `npm run sfu` + `npm run sfu:client`, then `--mode sfu` (or include sfu in the matrix).  
 Optional SFU CPU: set `LIVEKIT_PID` (or `SFU_PID`) in `.env` to the LiveKit process id.
 
 Useful Chromium flags (applied by `launchParticipants`):
