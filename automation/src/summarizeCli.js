@@ -4,8 +4,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   STEADY_STATE_SKIP_MS,
+  loadRunDocuments,
   summarizeResultsDir,
 } from './summarize.js';
+import {
+  detectFailurePoints,
+  formatFailurePointsMd,
+} from './failureDetect.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '../..');
@@ -39,12 +44,17 @@ export function parseSummarizeArgs(argv) {
     repoRoot,
     String(flags.out ?? path.join('results', 'summary', 'bitrate-vs-n.csv')),
   );
+  const failOut = path.resolve(
+    repoRoot,
+    String(flags['fail-out'] ?? path.join('results', 'summary', 'failure-points.md')),
+  );
   const skipMs = Number(flags['skip-ms'] ?? STEADY_STATE_SKIP_MS);
   if (!Number.isFinite(skipMs) || skipMs < 0) {
     throw new Error('--skip-ms must be >= 0');
   }
+  const skipFail = flags['no-fail'] === true;
 
-  return { help: false, resultsDir, outPath, skipMs };
+  return { help: false, resultsDir, outPath, failOut, skipMs, skipFail };
 }
 
 export function summarizeUsage() {
@@ -55,7 +65,9 @@ export function summarizeUsage() {
 Options:
   --results <dir>   Results root containing mesh/ and sfu/ (default results/)
   --out <file>      CSV output path (default results/summary/bitrate-vs-n.csv)
+  --fail-out <file> Failure points markdown (default results/summary/failure-points.md)
   --skip-ms <ms>    Ramp-up samples to drop (default 10000)
+  --no-fail         Skip failure-points.md generation
   --help            Show help
 `;
 }
@@ -67,13 +79,16 @@ Options:
 export function runSummarizeCli(options, deps = {}) {
   const {
     summarize = summarizeResultsDir,
+    loadDocs = loadRunDocuments,
+    detectFailures = detectFailurePoints,
+    formatFailures = formatFailurePointsMd,
     writeFileSync = fs.writeFileSync,
     mkdirSync = fs.mkdirSync,
     log = console.log,
     warn = console.warn,
   } = deps;
 
-  const { rows, csv, markdown, warnings } = summarize(options.resultsDir, {
+  const { rows, csv, markdown, warnings, docs } = summarize(options.resultsDir, {
     skipMs: options.skipMs,
   });
 
@@ -91,7 +106,28 @@ export function runSummarizeCli(options, deps = {}) {
     log('\nSanity checks: OK (mesh uplink rises / SFU roughly flat for uncapped).');
   }
 
-  return { rows, csv, warnings, outPath: options.outPath };
+  /** @type {string|null} */
+  let failOutPath = null;
+  /** @type {ReturnType<typeof detectFailurePoints>|null} */
+  let failureAnalysis = null;
+  if (!options.skipFail) {
+    const runDocs = docs ?? loadDocs(options.resultsDir);
+    failureAnalysis = detectFailures(runDocs, { skipMs: options.skipMs });
+    const md = formatFailures(failureAnalysis);
+    mkdirSync(path.dirname(options.failOut), { recursive: true });
+    writeFileSync(options.failOut, md, 'utf8');
+    failOutPath = options.failOut;
+    log(`\nWrote failure points → ${options.failOut}`);
+  }
+
+  return {
+    rows,
+    csv,
+    warnings,
+    outPath: options.outPath,
+    failOutPath,
+    failureAnalysis,
+  };
 }
 
 export async function main(argv) {
