@@ -143,28 +143,39 @@ Verify:
 - Signaling on TCP WebSocket
 - Media on UDP
 
-## 6. Traffic Control (`tc`) — Uplink Caps
+## 6. Traffic Control (`tc`) — Uplink Caps (Phase 7)
 
-On Linux, identify the client interface (e.g. `eth0`, `wlan0`):
+On Linux, identify the client interface (e.g. `eth0`, `wlan0`), then use the helper:
 
 ```bash
-# Example: cap EGRESS (uplink) to 1 Mbps on eth0
-sudo tc qdisc add dev eth0 root tbf rate 1mbit burst 32kbit latency 400ms
-
-# 5 Mbps
-sudo tc qdisc change dev eth0 root tbf rate 5mbit burst 32kbit latency 400ms
-
-# Remove
-sudo tc qdisc del dev eth0 root
+sudo ./scripts/tc-uplink.sh apply eth0 1mbit
+./scripts/tc-uplink.sh show eth0
+sudo ./scripts/tc-uplink.sh apply eth0 5mbit
+sudo ./scripts/tc-uplink.sh clear eth0
 ```
 
-**Experiment design tip:** Cap **one** participant’s uplink only; leave others uncapped so the bottleneck is localized.
+Automation (does **not** shape from Windows blindly — requires `--tc-iface` on Linux/WSL):
 
-Helper scripts should live under `scripts/` (e.g. `scripts/tc-uplink.sh`).
+```bash
+# Label + real shaping
+npm run run-once -- --mode mesh --n 3 --cap 1Mbps --tc-iface eth0 --duration 20
+
+# Capped matrix subset (N=3,4,5)
+npm run matrix -- --cap 1Mbps --n 3,4,5 --tc-iface eth0 --duration 20 --cooldown 5
+
+# Summarize → CSV + results/summary/failure-points.md
+npm run summarize
+```
+
+`--cap` alone only records the label in JSON. Pass `--tc-iface` so `runOnce` calls `tc-uplink.sh apply` before launch and `clear` in `finally`.  
+`--capped-peer p1` marks which participant is the capped role in the schema (default `p1`).
+
+**Single-laptop caveat:** shaping the NIC egress affects all browsers on that host. Prefer a multi-host setup (capped peer on a Linux machine) for clean isolation; the run `notes` field records when tc was applied.
 
 ### WSL2 / Windows
 
-- Prefer running the capped client inside Linux (WSL2 networking can be tricky)
+- Core mesh/SFU/Puppeteer can run on Windows
+- Real `tc` caps need Linux (native, VM, or WSL with a real iface) — set `TC_SHELL` if `bash` is not on PATH
 - Or run the shaped peer on a separate Linux laptop on the lab LAN
 
 ## 7. Ports (Typical Local Dev)

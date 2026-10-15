@@ -11,6 +11,7 @@ import { buildRunDocument, expectedMinSamples, validateRunDocument } from './sch
 import { closeParticipants, launchParticipants } from './launchParticipants.js';
 import { collectStats } from './collectStats.js';
 import { createCpuSampler, resolveSfuPid } from './cpuSampler.js';
+import { applyCapIfNeeded, clearCapIfNeeded } from './tcUplink.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '../..');
@@ -32,10 +33,13 @@ export async function executeRun(options, deps = {}) {
     mkdirSync = fs.mkdirSync,
     readdirSync = fs.readdirSync,
     now = () => Date.now(),
+    applyCap = applyCapIfNeeded,
+    clearCap = clearCapIfNeeded,
   } = deps;
 
   const baseUrl = options.baseUrl ?? defaultBaseUrl(options.mode);
   const roomId = options.roomId || DEFAULT_ROOM_ID;
+  const cappedPeerId = options.cappedPeer || 'p1';
   const sfuPid = resolveSfuPid(process.env);
   const sampler = createSampler({ extraPids: sfuPid > 0 ? [sfuPid] : [] });
 
@@ -57,9 +61,19 @@ export async function executeRun(options, deps = {}) {
   });
 
   let browsers = [];
+  let tcApplied = false;
+  /** @type {string[]} */
+  const noteParts = [`Phase 7 runOnce trial ${trial}`, `cappedPeer=${cappedPeerId}`];
   const startedAt = new Date(now()).toISOString();
 
   try {
+    const capResult = await applyCap({
+      cap: options.cap,
+      tcIface: options.tcIface,
+    });
+    tcApplied = Boolean(capResult.applied);
+    if (capResult.note) noteParts.push(capResult.note);
+
     const launched = await launch({
       n: options.n,
       mode: options.mode,
@@ -84,6 +98,7 @@ export async function executeRun(options, deps = {}) {
       mode: options.mode,
       n: options.n,
       uplinkCap: options.cap,
+      cappedPeerId,
       durationSec: options.durationSec,
       sampleIntervalMs: options.sampleIntervalMs,
       startedAt,
@@ -93,7 +108,7 @@ export async function executeRun(options, deps = {}) {
       sfuSamples: collected.sfuSamples,
       sfuPid,
       chromium: launched.chromiumVersion ?? '',
-      notes: `Phase 5 runOnce trial ${trial}`,
+      notes: noteParts.join('; '),
     });
 
     const errors = validateRunDocument(doc);
@@ -111,9 +126,19 @@ export async function executeRun(options, deps = {}) {
     }
 
     writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`, 'utf8');
-    return { outPath, doc, trial };
+    return { outPath, doc, trial, tcApplied };
   } finally {
     await close(browsers);
+    if (options.tcIface) {
+      try {
+        await clearCap({ tcIface: options.tcIface });
+      } catch (err) {
+        console.error(
+          `warning: failed to clear tc on ${options.tcIface}:`,
+          err instanceof Error ? err.message : err,
+        );
+      }
+    }
   }
 }
 
@@ -141,6 +166,8 @@ async function main(argv) {
         n: options.n,
         durationSec: options.durationSec,
         cap: options.cap,
+        tcIface: options.tcIface ?? null,
+        cappedPeer: options.cappedPeer,
         outDir: options.outDir,
       },
       null,

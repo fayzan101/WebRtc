@@ -116,6 +116,10 @@ npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
 # Phase 6 — matrix + summarize (clients/LiveKit up as needed)
 npm run matrix -- --dry-run
 npm run summarize
+
+# Phase 7 — capped run on Linux/WSL (requires tc + --tc-iface)
+# npm run run-once -- --mode mesh --n 3 --cap 1Mbps --tc-iface eth0
+# npm run summarize   # also writes results/summary/failure-points.md
 ```
 
 ## License Note

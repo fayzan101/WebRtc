@@ -38,6 +38,10 @@ describe('parseArgs', () => {
       '002',
       '--audio-file',
       'tone.wav',
+      '--tc-iface',
+      'eth0',
+      '--capped-peer',
+      'p1',
       '--headed',
     ]);
     assert.equal(opts.mode, 'sfu');
@@ -51,6 +55,8 @@ describe('parseArgs', () => {
     assert.equal(opts.baseUrl, 'http://127.0.0.1:5174/');
     assert.equal(opts.trial, '002');
     assert.equal(opts.audioFile, 'tone.wav');
+    assert.equal(opts.tcIface, 'eth0');
+    assert.equal(opts.cappedPeer, 'p1');
     assert.equal(opts.headless, false);
   });
 
