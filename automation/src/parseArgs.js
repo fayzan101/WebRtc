@@ -59,6 +59,11 @@ export function parseArgs(argv) {
   const audioFile = flags['audio-file'] ? String(flags['audio-file']) : undefined;
   const trial = flags.trial != null ? String(flags.trial) : undefined;
   const headless = flags.headed !== true;
+  const tcIface = flags['tc-iface'] ? String(flags['tc-iface']) : undefined;
+  const cappedPeer = String(flags['capped-peer'] ?? 'p1');
+  if (!/^p\d+$/.test(cappedPeer)) {
+    throw new Error(`--capped-peer must look like p1 (got ${cappedPeer})`);
+  }
 
   return {
     mode,
@@ -73,6 +78,8 @@ export function parseArgs(argv) {
     audioFile,
     trial,
     headless,
+    tcIface,
+    cappedPeer,
     help: flags.help === true,
   };
 }
@@ -84,6 +91,8 @@ export function usageText() {
 Options:
   --duration <sec>       Sample window length (default 90)
   --cap <cap>            uncapped|1Mbps|5Mbps (default uncapped)
+  --tc-iface <iface>     Linux/WSL iface for scripts/tc-uplink.sh (optional)
+  --capped-peer <id>     Peer id treated as capped (default p1)
   --out <dir>            Results root (default results/ or RESULTS_DIR)
   --interval <ms>        Stats sample interval (default 2000)
   --timeout <ms>         Join wait timeout (default 60000)
@@ -93,6 +102,8 @@ Options:
   --audio-file <path>    Fake audio capture WAV for Chromium
   --headed               Show browser windows (default headless)
   --help                 Show this help
+
+Note: --cap alone records the label; real shaping requires --tc-iface on Linux/WSL.
 `;
 }
 

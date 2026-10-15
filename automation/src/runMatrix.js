@@ -78,6 +78,11 @@ export function parseMatrixArgs(argv) {
   const headless = flags.headed !== true;
   const baseUrlMesh = flags['base-url-mesh'] ? String(flags['base-url-mesh']) : undefined;
   const baseUrlSfu = flags['base-url-sfu'] ? String(flags['base-url-sfu']) : undefined;
+  const tcIface = flags['tc-iface'] ? String(flags['tc-iface']) : undefined;
+  const cappedPeer = String(flags['capped-peer'] ?? 'p1');
+  if (!/^p\d+$/.test(cappedPeer)) {
+    throw new Error(`--capped-peer must look like p1 (got ${cappedPeer})`);
+  }
 
   return {
     help: false,
@@ -95,6 +100,8 @@ export function parseMatrixArgs(argv) {
     headless,
     baseUrlMesh,
     baseUrlSfu,
+    tcIface,
+    cappedPeer,
   };
 }
 
@@ -115,9 +122,13 @@ Options:
   --room <prefix>        Room id prefix (default project23)
   --base-url-mesh <url>  Override mesh client origin
   --base-url-sfu <url>   Override SFU client origin
+  --tc-iface <iface>     Linux/WSL iface for tc-uplink.sh (optional)
+  --capped-peer <id>     Peer id treated as capped (default p1)
   --dry-run              Print planned grid only
   --headed               Show browsers
   --help                 Show help
+
+Note: --cap 1Mbps|5Mbps alone labels results; pass --tc-iface on Linux/WSL to shape uplink.
 `;
 }
 
@@ -170,6 +181,8 @@ export async function executeMatrix(options, deps = {}) {
         ns: options.ns,
         trials: options.trials,
         cap: options.cap,
+        tcIface: options.tcIface ?? null,
+        cappedPeer: options.cappedPeer,
         dryRun: options.dryRun,
       },
       null,
@@ -210,6 +223,8 @@ export async function executeMatrix(options, deps = {}) {
       audioFile: undefined,
       trial: String(step.trialIndex),
       headless: options.headless,
+      tcIface: options.tcIface,
+      cappedPeer: options.cappedPeer,
       help: false,
     };
 

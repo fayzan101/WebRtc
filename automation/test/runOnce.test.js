@@ -77,6 +77,8 @@ describe('executeRun', () => {
         mkdirSync: () => {},
         readdirSync: () => [],
         now: () => Date.parse('2026-10-10T12:00:00.000Z'),
+        applyCap: async () => ({ applied: false, note: '' }),
+        clearCap: async () => ({ cleared: false }),
       },
     );
 
@@ -127,10 +129,76 @@ describe('executeRun', () => {
             },
             mkdirSync: () => {},
             readdirSync: () => [],
+            applyCap: async () => ({ applied: false, note: '' }),
+            clearCap: async () => ({ cleared: false }),
           },
         ),
       /stats boom/,
     );
     assert.deepEqual(closed.map((b) => b.id), ['x']);
+  });
+
+  it('applies tc before launch and clears in finally', async () => {
+    const ops = [];
+    await executeRun(
+      {
+        mode: 'mesh',
+        n: 2,
+        durationSec: 6,
+        cap: '1Mbps',
+        outDir: 'tmp-test-results',
+        roomId: 'project23',
+        sampleIntervalMs: 2000,
+        joinTimeoutMs: 1000,
+        trial: '1',
+        headless: true,
+        tcIface: 'eth0',
+        cappedPeer: 'p1',
+      },
+      {
+        launch: async () => {
+          ops.push('launch');
+          return {
+            browsers: [{ id: 'b' }],
+            pages: [
+              { peerId: 'p1', page: {}, browserPid: 1 },
+              { peerId: 'p2', page: {}, browserPid: 2 },
+            ],
+            peerIds: ['p1', 'p2'],
+            chromiumVersion: 'Chrome/test',
+          };
+        },
+        collect: async () => ({
+          joinTimeMs: 1,
+          participants: [
+            {
+              peerId: 'p1',
+              samples: Array.from({ length: 3 }, (_, i) => makeSample(i)),
+            },
+            {
+              peerId: 'p2',
+              samples: Array.from({ length: 3 }, (_, i) => makeSample(i)),
+            },
+          ],
+          sfuSamples: [],
+        }),
+        close: async () => {
+          ops.push('close');
+        },
+        createSampler: () => ({ sample: async () => ({ byPid: {} }) }),
+        writeFileSync: () => {},
+        mkdirSync: () => {},
+        readdirSync: () => [],
+        applyCap: async () => {
+          ops.push('apply');
+          return { applied: true, note: 'tc applied on eth0 rate=1mbit' };
+        },
+        clearCap: async () => {
+          ops.push('clear');
+          return { cleared: true };
+        },
+      },
+    );
+    assert.deepEqual(ops, ['apply', 'launch', 'close', 'clear']);
   });
 });

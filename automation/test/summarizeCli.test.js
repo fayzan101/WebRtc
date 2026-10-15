@@ -9,10 +9,12 @@ describe('summarizeCli', () => {
     assert.equal(opts.help, false);
     assert.ok(opts.resultsDir.endsWith(`${path.sep}results`));
     assert.ok(opts.outPath.includes(path.join('summary', 'bitrate-vs-n.csv')));
+    assert.ok(opts.failOut.includes(path.join('summary', 'failure-points.md')));
     assert.equal(opts.skipMs, 10_000);
+    assert.equal(opts.skipFail, false);
   });
 
-  it('runSummarizeCli writes CSV from injected summarize', () => {
+  it('runSummarizeCli writes CSV and failure-points.md', () => {
     const written = [];
     const logs = [];
     const result = runSummarizeCli(
@@ -20,7 +22,9 @@ describe('summarizeCli', () => {
         help: false,
         resultsDir: '/tmp/results',
         outPath: path.join('tmp', 'summary', 'bitrate-vs-n.csv'),
+        failOut: path.join('tmp', 'summary', 'failure-points.md'),
         skipMs: 10_000,
+        skipFail: false,
       },
       {
         summarize: () => ({
@@ -43,7 +47,10 @@ describe('summarizeCli', () => {
           csv: 'mode,n\nmesh,2\n',
           markdown: '### tables',
           warnings: [],
+          docs: [],
         }),
+        detectFailures: () => ({ evaluations: [], points: {} }),
+        formatFailures: () => '# Failure points\n',
         writeFileSync: (file, body) => written.push({ file, body }),
         mkdirSync: () => {},
         log: (m) => logs.push(String(m)),
@@ -51,8 +58,9 @@ describe('summarizeCli', () => {
       },
     );
 
-    assert.equal(written.length, 1);
+    assert.equal(written.length, 2);
     assert.equal(written[0].body, 'mode,n\nmesh,2\n');
+    assert.equal(written[1].body, '# Failure points\n');
     assert.equal(result.rows.length, 1);
     assert.ok(logs.some((l) => l.includes('Wrote 1 row')));
   });
