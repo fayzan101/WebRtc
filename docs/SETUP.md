@@ -113,6 +113,11 @@ npm run matrix -- --duration 90 --cooldown 15
 npm run summarize
 # → results/summary/bitrate-vs-n.csv + markdown tables on stdout
 # fixtures dry-check: npm run summarize -- --results dashboard/client/public/fixtures
+
+# Phase 8 — plots + filled report + verification
+npm run plot
+npm run fill-report
+npm run verify:phase8
 ```
 
 SFU path: start LiveKit + `npm run sfu` + `npm run sfu:client`, then `--mode sfu` (or include sfu in the matrix).  
