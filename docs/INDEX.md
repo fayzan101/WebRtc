@@ -13,7 +13,9 @@
 | [EXPERIMENT_PLAN.md](EXPERIMENT_PLAN.md) | Experimenters | Test matrix and hypotheses |
 | [EVALUATION.md](EVALUATION.md) | Experimenters | Metrics, plots, interpretation |
 | [DATA_SCHEMA.md](DATA_SCHEMA.md) | Automation | JSON/CSV result format (Results Dashboard / Phase 9) |
-| [REPORT_TEMPLATE.md](REPORT_TEMPLATE.md) | Writers | Lab report outline |
+| [REPORT_TEMPLATE.md](REPORT_TEMPLATE.md) | Writers | Blank lab report outline |
+| [REPORT.md](REPORT.md) | Writers | Filled report from CSV (`npm run fill-report`) |
+| [figures/](figures/) | Writers | SVG plots from `npm run plot` |
 | [ADVANCED.md](ADVANCED.md) | Optional | Simulcast, MCU, active speaker, TURN |
 | [GLOSSARY.md](GLOSSARY.md) | Everyone | Terms |
 | [CHECKLIST.md](CHECKLIST.md) | Submitters | Hand-in readiness |

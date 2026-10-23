@@ -11,57 +11,70 @@ Relate architecture choice to **per-host throughput demands** and **access-link 
 | Document | Purpose |
 |----------|---------|
 | [docs/INDEX.md](docs/INDEX.md) | Full docs map and reading order |
+| [docs/PROJECT_PROPOSAL.md](docs/PROJECT_PROPOSAL.md) | Project proposal (if present) |
 | [docs/PROJECT_SPEC.md](docs/PROJECT_SPEC.md) | Formal problem statement and requirements |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Mesh vs SFU design, call anatomy, media paths |
-| [docs/SERVER_SIDE_EXPLAINED.md](docs/SERVER_SIDE_EXPLAINED.md) | Server-side working in plain words |
-| [docs/PROTOCOLS.md](docs/PROTOCOLS.md) | ICE/STUN, DTLS-SRTP, RTP/RTCP, signaling, NAT |
 | [docs/SETUP.md](docs/SETUP.md) | Environment, dependencies, LiveKit, tools |
-| [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md) | Step-by-step build guide (mesh → SFU → automation) |
-| [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) | Phase-wise plan — complete builds only (no stubs) |
 | [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md) | N=2–6 tests, uplink caps, scenarios |
 | [docs/EVALUATION.md](docs/EVALUATION.md) | Metrics, getStats collection, analysis |
 | [docs/DATA_SCHEMA.md](docs/DATA_SCHEMA.md) | JSON/CSV results contract |
-| [docs/REPORT_TEMPLATE.md](docs/REPORT_TEMPLATE.md) | Lab report structure for submission |
-| [docs/ADVANCED.md](docs/ADVANCED.md) | Optional: simulcast, MCU, active speaker |
-| [docs/GLOSSARY.md](docs/GLOSSARY.md) | Terms |
+| [docs/REPORT_TEMPLATE.md](docs/REPORT_TEMPLATE.md) | Blank lab report outline |
+| [docs/REPORT.md](docs/REPORT.md) | Filled report (from CSV via `npm run fill-report`) |
 | [docs/CHECKLIST.md](docs/CHECKLIST.md) | Submission readiness |
+| [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) | Phase-wise complete-build plan |
 
 ## Core POC
 
-An **audio conference** (optional low-resolution video) in two modes:
+1. **Mesh** — custom WebSocket signaling; N−1 peer connections per client  
+2. **SFU** — LiveKit; one connection to the SFU per client  
+3. **Automation** — Puppeteer + fake media for N = 2…6; schema-v1 JSON; summarize + failure points  
+4. **Dashboard** — browse runs and mesh vs SFU curves in the browser  
 
-1. **Mesh** — custom WebSocket signaling; N−1 peer connections per client
-2. **SFU** — LiveKit (or Janus); one connection to the SFU per client
+## Exact runbook (clean machine)
 
-Automated participants for **N = 2 to 6** via Puppeteer + fake media, with a script that collects `getStats()` data.
+```bash
+npm install
+cp .env.example .env          # PowerShell: Copy-Item .env.example .env
 
-## Networking Concepts
+# --- Mesh ---
+npm run mesh                  # Express+WS  http://127.0.0.1:3000/health
+npm run mesh:client           # Vite        http://127.0.0.1:5173
 
-- Throughput and bottleneck links
-- Application architectures (P2P mesh vs middlebox SFU)
-- Content distribution by a middlebox
-- UDP real-time media
+# --- SFU ---
+npm run livekit               # LiveKit --dev (needs Docker or livekit-server)
+npm run sfu                   # Token API   http://127.0.0.1:3001/health
+npm run sfu:client            # Vite        http://127.0.0.1:5174
 
-## Free / Open-Source Stack
+# --- Dashboard ---
+npm run dashboard             # API         http://127.0.0.1:5180/health
+npm run dashboard:client      # UI          http://127.0.0.1:5181
 
-| Component | Role |
-|-----------|------|
-| LiveKit server (`livekit-server --dev`) or Janus | SFU |
-| LiveKit JS SDK | SFU client |
-| Node.js | Signaling server, automation, stats scripts |
-| React + Vite | Mesh and SFU frontends |
-| Puppeteer + Chromium | Headless participants with fake media |
-| Chrome DevTools / `getStats()` | Quality metrics |
-| Wireshark | Packet capture (RTP/UDP/WebSocket) |
-| `tc` (Linux traffic control) | Uplink bandwidth caps |
+# --- One run (Phase 5) — mesh client must be up ---
+npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
 
-## Implementation Checklist
+# --- Matrix + summarize (Phase 6) ---
+npm run matrix -- --dry-run
+npm run matrix -- --n 2,3,4,5,6 --modes mesh,sfu --duration 90 --cooldown 15
+npm run summarize             # → results/summary/bitrate-vs-n.csv (+ failure-points.md)
 
-- [ ] 1. Build mesh signaling and verify a 3-party audio call
-- [ ] 2. Deploy LiveKit in dev mode; build the SFU client page
-- [ ] 3. Automate participants with Puppeteer and fake media
-- [ ] 4. Collect getStats and CPU for N = 2–6 in both modes
-- [ ] 5. Cap one client’s uplink with `tc` and find the N where mesh fails
+# --- Uplink cap (Phase 7, Linux/WSL) ---
+sudo ./scripts/tc-uplink.sh apply eth0 1mbit
+npm run run-once -- --mode mesh --n 3 --cap 1Mbps --tc-iface eth0 --duration 20
+sudo ./scripts/tc-uplink.sh clear eth0
+# or matrix subset:
+# npm run matrix -- --cap 1Mbps --n 3,4,5 --tc-iface eth0 --duration 20 --cooldown 5
+
+# --- Report wiring (Phase 8) ---
+npm run plot                  # SVG figures → docs/figures/ (uses results CSV or fixtures)
+npm run fill-report           # docs/REPORT.md from CSV
+npm run verify:phase8         # plots + report + README + unit tests
+
+# --- Tests ---
+npm test
+npm run test:automation
+```
+
+Fake-media Chromium flags are applied by `launchParticipants` (`--use-fake-device-for-media-stream`, `--use-fake-ui-for-media-stream`, `--autoplay-policy=no-user-gesture-required`).
 
 ## Testing Snapshot
 
@@ -69,14 +82,15 @@ Automated participants for **N = 2 to 6** via Puppeteer + fake media, with a scr
 |----------|--------|
 | Participants (N) | 2, 3, 4, 5, 6 |
 | Modes | Mesh, SFU |
-| Uplink caps (one participant) | unlimited, 1 Mbps, 5 Mbps |
+| Uplink caps (one participant) | uncapped, 1 Mbps, 5 Mbps |
 
 ## Evaluation Metrics
 
-- Uplink / downlink bitrate per client vs N
-- CPU per client and SFU
-- RTT, jitter, packet loss
-- Join time
+- Uplink / downlink bitrate per client vs N  
+- CPU per client and SFU  
+- RTT, jitter, packet loss  
+- Join time  
+- Failure N under caps (`results/summary/failure-points.md`)  
 
 ## Repository Layout
 
@@ -84,43 +98,27 @@ Automated participants for **N = 2 to 6** via Puppeteer + fake media, with a scr
 WebRtc/
 ├── README.md
 ├── package.json             # npm workspaces
-├── shared/                  # room/peer constants
-├── docs/
-├── mesh/
-│   ├── server/              # Express (+ WS in Phase 1)
-│   └── client/              # React + Vite mesh UI
-├── sfu/
-│   ├── server/              # Express token API (Phase 3)
-│   └── client/              # React + Vite SFU UI
+├── shared/
+├── docs/                    # spec, plan, REPORT.md, figures/
+├── mesh/                    # server + React client
+├── sfu/                     # token API + React client
 ├── dashboard/               # Results Dashboard (Phase 9)
-├── automation/              # Puppeteer runOnce (Phase 5+)
-├── scripts/
-└── results/
+├── automation/              # runOnce, matrix, summarize, plot helpers
+├── scripts/                 # livekit, tc-uplink, summarize, plot, verify
+└── results/                 # schema-v1 JSON + summary CSV (gitignored data)
 ```
 
-## Quick start
+## Free / Open-Source Stack
 
-```bash
-npm install
-cp .env.example .env   # optional on Windows: copy .env.example .env
-npm run mesh           # http://127.0.0.1:3000/health
-npm run sfu            # http://127.0.0.1:3001/health
-npm run mesh:client    # http://127.0.0.1:5173 (proxies /health)
-npm run sfu:client     # http://127.0.0.1:5174
-npm run dashboard      # http://127.0.0.1:5180/health (results API)
-npm run dashboard:client  # http://127.0.0.1:5181
-
-# Phase 5 — one headless run (mesh client must already be up)
-npm run run-once -- --mode mesh --n 2 --duration 20 --cap uncapped
-
-# Phase 6 — matrix + summarize (clients/LiveKit up as needed)
-npm run matrix -- --dry-run
-npm run summarize
-
-# Phase 7 — capped run on Linux/WSL (requires tc + --tc-iface)
-# npm run run-once -- --mode mesh --n 3 --cap 1Mbps --tc-iface eth0
-# npm run summarize   # also writes results/summary/failure-points.md
-```
+| Component | Role |
+|-----------|------|
+| LiveKit server (`--dev`) | SFU |
+| LiveKit JS SDK | SFU client |
+| Node.js + Express + `ws` | Signaling / tokens / automation |
+| React + Vite | Mesh and SFU frontends |
+| Puppeteer + Chromium | Headless participants with fake media |
+| `tc` (Linux) | Uplink bandwidth caps |
+| Results Dashboard | Browse / plot experiment JSON |
 
 ## License Note
 

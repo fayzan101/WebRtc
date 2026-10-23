@@ -2,6 +2,14 @@
 
 Copy this structure into your submission document (PDF/Markdown). Replace bracketed prompts with measured results.
 
+**Phase 8:** generate a filled draft automatically:
+
+```bash
+npm run plot          # docs/figures/*.svg from summary CSV (or fixtures)
+npm run fill-report   # docs/REPORT.md
+npm run verify:phase8
+```
+
 ---
 
 ## Title
